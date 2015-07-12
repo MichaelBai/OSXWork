@@ -1,0 +1,494 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4CBCA9941B52B8C900A63199 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBCA9931B52B8C900A63199 /* Cocoa.framework */; };
+		4CBCA99E1B52B8C900A63199 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBCA99C1B52B8C900A63199 /* InfoPlist.strings */; };
+		4CBCA9A01B52B8C900A63199 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBCA99F1B52B8C900A63199 /* main.m */; };
+		4CBCA9A41B52B8C900A63199 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 4CBCA9A21B52B8C900A63199 /* Credits.rtf */; };
+		4CBCA9A71B52B8C900A63199 /* MBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBCA9A61B52B8C900A63199 /* MBAppDelegate.m */; };
+		4CBCA9AA1B52B8C900A63199 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CBCA9A81B52B8C900A63199 /* MainMenu.xib */; };
+		4CBCA9AC1B52B8C900A63199 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CBCA9AB1B52B8C900A63199 /* Images.xcassets */; };
+		4CBCA9B31B52B8C900A63199 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBCA9B21B52B8C900A63199 /* XCTest.framework */; };
+		4CBCA9B41B52B8C900A63199 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBCA9931B52B8C900A63199 /* Cocoa.framework */; };
+		4CBCA9BC1B52B8C900A63199 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBCA9BA1B52B8C900A63199 /* InfoPlist.strings */; };
+		4CBCA9BE1B52B8C900A63199 /* GoDesignTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBCA9BD1B52B8C900A63199 /* GoDesignTests.m */; };
+		4CBCA9CB1B52B90E00A63199 /* MBGoDesignImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBCA9C81B52B90E00A63199 /* MBGoDesignImageView.m */; };
+		4CBCA9D21B52BD1F00A63199 /* MBGoDesignWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBCA9D11B52BD1F00A63199 /* MBGoDesignWindowController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4CBCA9B51B52B8C900A63199 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4CBCA9881B52B8C900A63199 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4CBCA98F1B52B8C900A63199;
+			remoteInfo = GoDesign;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		4CBCA9901B52B8C900A63199 /* GoDesign.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoDesign.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CBCA9931B52B8C900A63199 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		4CBCA9961B52B8C900A63199 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		4CBCA9971B52B8C900A63199 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		4CBCA9981B52B8C900A63199 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		4CBCA99B1B52B8C900A63199 /* GoDesign-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoDesign-Info.plist"; sourceTree = "<group>"; };
+		4CBCA99D1B52B8C900A63199 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		4CBCA99F1B52B8C900A63199 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4CBCA9A11B52B8C900A63199 /* GoDesign-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GoDesign-Prefix.pch"; sourceTree = "<group>"; };
+		4CBCA9A31B52B8C900A63199 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		4CBCA9A51B52B8C900A63199 /* MBAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MBAppDelegate.h; sourceTree = "<group>"; };
+		4CBCA9A61B52B8C900A63199 /* MBAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MBAppDelegate.m; sourceTree = "<group>"; };
+		4CBCA9A91B52B8C900A63199 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		4CBCA9AB1B52B8C900A63199 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		4CBCA9B11B52B8C900A63199 /* GoDesignTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoDesignTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CBCA9B21B52B8C900A63199 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		4CBCA9B91B52B8C900A63199 /* GoDesignTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoDesignTests-Info.plist"; sourceTree = "<group>"; };
+		4CBCA9BB1B52B8C900A63199 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		4CBCA9BD1B52B8C900A63199 /* GoDesignTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GoDesignTests.m; sourceTree = "<group>"; };
+		4CBCA9C71B52B90E00A63199 /* MBGoDesignImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBGoDesignImageView.h; sourceTree = "<group>"; };
+		4CBCA9C81B52B90E00A63199 /* MBGoDesignImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBGoDesignImageView.m; sourceTree = "<group>"; };
+		4CBCA9D01B52BD1F00A63199 /* MBGoDesignWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBGoDesignWindowController.h; sourceTree = "<group>"; };
+		4CBCA9D11B52BD1F00A63199 /* MBGoDesignWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBGoDesignWindowController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4CBCA98D1B52B8C900A63199 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CBCA9941B52B8C900A63199 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4CBCA9AE1B52B8C900A63199 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CBCA9B41B52B8C900A63199 /* Cocoa.framework in Frameworks */,
+				4CBCA9B31B52B8C900A63199 /* XCTest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4CBCA9871B52B8C900A63199 = {
+			isa = PBXGroup;
+			children = (
+				4CBCA9991B52B8C900A63199 /* GoDesign */,
+				4CBCA9B71B52B8C900A63199 /* GoDesignTests */,
+				4CBCA9921B52B8C900A63199 /* Frameworks */,
+				4CBCA9911B52B8C900A63199 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4CBCA9911B52B8C900A63199 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4CBCA9901B52B8C900A63199 /* GoDesign.app */,
+				4CBCA9B11B52B8C900A63199 /* GoDesignTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4CBCA9921B52B8C900A63199 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4CBCA9931B52B8C900A63199 /* Cocoa.framework */,
+				4CBCA9B21B52B8C900A63199 /* XCTest.framework */,
+				4CBCA9951B52B8C900A63199 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4CBCA9951B52B8C900A63199 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4CBCA9961B52B8C900A63199 /* AppKit.framework */,
+				4CBCA9971B52B8C900A63199 /* CoreData.framework */,
+				4CBCA9981B52B8C900A63199 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		4CBCA9991B52B8C900A63199 /* GoDesign */ = {
+			isa = PBXGroup;
+			children = (
+				4CBCA9D01B52BD1F00A63199 /* MBGoDesignWindowController.h */,
+				4CBCA9D11B52BD1F00A63199 /* MBGoDesignWindowController.m */,
+				4CBCA9C71B52B90E00A63199 /* MBGoDesignImageView.h */,
+				4CBCA9C81B52B90E00A63199 /* MBGoDesignImageView.m */,
+				4CBCA9A51B52B8C900A63199 /* MBAppDelegate.h */,
+				4CBCA9A61B52B8C900A63199 /* MBAppDelegate.m */,
+				4CBCA9A81B52B8C900A63199 /* MainMenu.xib */,
+				4CBCA9AB1B52B8C900A63199 /* Images.xcassets */,
+				4CBCA99A1B52B8C900A63199 /* Supporting Files */,
+			);
+			path = GoDesign;
+			sourceTree = "<group>";
+		};
+		4CBCA99A1B52B8C900A63199 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4CBCA99B1B52B8C900A63199 /* GoDesign-Info.plist */,
+				4CBCA99C1B52B8C900A63199 /* InfoPlist.strings */,
+				4CBCA99F1B52B8C900A63199 /* main.m */,
+				4CBCA9A11B52B8C900A63199 /* GoDesign-Prefix.pch */,
+				4CBCA9A21B52B8C900A63199 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4CBCA9B71B52B8C900A63199 /* GoDesignTests */ = {
+			isa = PBXGroup;
+			children = (
+				4CBCA9BD1B52B8C900A63199 /* GoDesignTests.m */,
+				4CBCA9B81B52B8C900A63199 /* Supporting Files */,
+			);
+			path = GoDesignTests;
+			sourceTree = "<group>";
+		};
+		4CBCA9B81B52B8C900A63199 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4CBCA9B91B52B8C900A63199 /* GoDesignTests-Info.plist */,
+				4CBCA9BA1B52B8C900A63199 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4CBCA98F1B52B8C900A63199 /* GoDesign */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4CBCA9C11B52B8C900A63199 /* Build configuration list for PBXNativeTarget "GoDesign" */;
+			buildPhases = (
+				4CBCA98C1B52B8C900A63199 /* Sources */,
+				4CBCA98D1B52B8C900A63199 /* Frameworks */,
+				4CBCA98E1B52B8C900A63199 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GoDesign;
+			productName = GoDesign;
+			productReference = 4CBCA9901B52B8C900A63199 /* GoDesign.app */;
+			productType = "com.apple.product-type.application";
+		};
+		4CBCA9B01B52B8C900A63199 /* GoDesignTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4CBCA9C41B52B8C900A63199 /* Build configuration list for PBXNativeTarget "GoDesignTests" */;
+			buildPhases = (
+				4CBCA9AD1B52B8C900A63199 /* Sources */,
+				4CBCA9AE1B52B8C900A63199 /* Frameworks */,
+				4CBCA9AF1B52B8C900A63199 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4CBCA9B61B52B8C900A63199 /* PBXTargetDependency */,
+			);
+			name = GoDesignTests;
+			productName = GoDesignTests;
+			productReference = 4CBCA9B11B52B8C900A63199 /* GoDesignTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4CBCA9881B52B8C900A63199 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = MB;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = MichaelBai;
+				TargetAttributes = {
+					4CBCA9B01B52B8C900A63199 = {
+						TestTargetID = 4CBCA98F1B52B8C900A63199;
+					};
+				};
+			};
+			buildConfigurationList = 4CBCA98B1B52B8C900A63199 /* Build configuration list for PBXProject "GoDesign" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4CBCA9871B52B8C900A63199;
+			productRefGroup = 4CBCA9911B52B8C900A63199 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4CBCA98F1B52B8C900A63199 /* GoDesign */,
+				4CBCA9B01B52B8C900A63199 /* GoDesignTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4CBCA98E1B52B8C900A63199 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CBCA99E1B52B8C900A63199 /* InfoPlist.strings in Resources */,
+				4CBCA9AC1B52B8C900A63199 /* Images.xcassets in Resources */,
+				4CBCA9A41B52B8C900A63199 /* Credits.rtf in Resources */,
+				4CBCA9AA1B52B8C900A63199 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4CBCA9AF1B52B8C900A63199 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CBCA9BC1B52B8C900A63199 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4CBCA98C1B52B8C900A63199 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CBCA9A01B52B8C900A63199 /* main.m in Sources */,
+				4CBCA9CB1B52B90E00A63199 /* MBGoDesignImageView.m in Sources */,
+				4CBCA9D21B52BD1F00A63199 /* MBGoDesignWindowController.m in Sources */,
+				4CBCA9A71B52B8C900A63199 /* MBAppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4CBCA9AD1B52B8C900A63199 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CBCA9BE1B52B8C900A63199 /* GoDesignTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4CBCA9B61B52B8C900A63199 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4CBCA98F1B52B8C900A63199 /* GoDesign */;
+			targetProxy = 4CBCA9B51B52B8C900A63199 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		4CBCA99C1B52B8C900A63199 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CBCA99D1B52B8C900A63199 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		4CBCA9A21B52B8C900A63199 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CBCA9A31B52B8C900A63199 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		4CBCA9A81B52B8C900A63199 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CBCA9A91B52B8C900A63199 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		4CBCA9BA1B52B8C900A63199 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CBCA9BB1B52B8C900A63199 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4CBCA9BF1B52B8C900A63199 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		4CBCA9C01B52B8C900A63199 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		4CBCA9C21B52B8C900A63199 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GoDesign/GoDesign-Prefix.pch";
+				INFOPLIST_FILE = "GoDesign/GoDesign-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		4CBCA9C31B52B8C900A63199 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GoDesign/GoDesign-Prefix.pch";
+				INFOPLIST_FILE = "GoDesign/GoDesign-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		4CBCA9C51B52B8C900A63199 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/GoDesign.app/Contents/MacOS/GoDesign";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GoDesign/GoDesign-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "GoDesignTests/GoDesignTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		4CBCA9C61B52B8C900A63199 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/GoDesign.app/Contents/MacOS/GoDesign";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GoDesign/GoDesign-Prefix.pch";
+				INFOPLIST_FILE = "GoDesignTests/GoDesignTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4CBCA98B1B52B8C900A63199 /* Build configuration list for PBXProject "GoDesign" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CBCA9BF1B52B8C900A63199 /* Debug */,
+				4CBCA9C01B52B8C900A63199 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4CBCA9C11B52B8C900A63199 /* Build configuration list for PBXNativeTarget "GoDesign" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CBCA9C21B52B8C900A63199 /* Debug */,
+				4CBCA9C31B52B8C900A63199 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		4CBCA9C41B52B8C900A63199 /* Build configuration list for PBXNativeTarget "GoDesignTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CBCA9C51B52B8C900A63199 /* Debug */,
+				4CBCA9C61B52B8C900A63199 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4CBCA9881B52B8C900A63199 /* Project object */;
+}
