@@ -13,6 +13,10 @@
     BOOL highlight;
 }
 
+@property NSBezierPath *path;
+@property NSPoint startPoint;
+@property NSPoint endPoint;
+
 @end
 
 @implementation MBGoDesignImageView
@@ -40,6 +44,10 @@
         [NSBezierPath setDefaultLineWidth:5];
         [NSBezierPath strokeRect:dirtyRect];
     }
+    
+    [[NSColor redColor] set];
+    [self.path setLineWidth:2];
+    [self.path stroke];
 }
 
 
@@ -138,6 +146,55 @@
     }
     
     return YES;
+}
+
+#pragma mark - Mouse Event Methods
+
+/*
+ Override two of NSResponder's mouse handling methods to respond to the events we want.
+ */
+
+// Start drawing a new squiggle on mouse down.
+- (void)mouseDown:(NSEvent *)event {
+    
+	// Convert from the window's coordinate system to this view's coordinates.
+    _startPoint = [self convertPoint:event.locationInWindow fromView:nil];
+    
+    // Create a default NSBezierPath.
+    _path = [NSBezierPath bezierPath];
+    
+    // Set the initial point of the path to be "initialPoint".
+    [_path moveToPoint:_startPoint];
+    
+//    ASCSquiggle *newSquiggle = [[ASCSquiggle alloc] initWithInitialPoint:locationInView];
+//    
+//    CGFloat red     = randomComponent(),
+//    green   = randomComponent(),
+//    blue    = randomComponent(),
+//    alpha   = randomComponent() / 2.f + .5f;
+//    
+//    newSquiggle.color = [NSColor colorWithCalibratedRed:red green:green blue:blue alpha:alpha];
+//    
+//    newSquiggle.thickness = 1 + 3.f * randomComponent();
+//    
+//    [self.squiggles addObject:newSquiggle];
+    
+    [self setNeedsDisplay:YES];
+}
+
+// Draw points on existing squiggle on mouse drag.
+- (void)mouseDragged:(NSEvent *)event {
+    
+	// Convert from the window's coordinate system to this view's coordinates.
+    NSPoint locationInView = [self convertPoint:event.locationInWindow fromView:nil];
+    _endPoint = NSMakePoint(locationInView.x, _startPoint.y);
+    [self.path lineToPoint:_endPoint];
+    
+//    ASCSquiggle *currentSquiggle = [self.squiggles lastObject];
+//    
+//    [currentSquiggle addPoint:locationInView];
+    
+    [self setNeedsDisplay:YES];
 }
 
 
