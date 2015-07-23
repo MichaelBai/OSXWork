@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C9516A01B594B640007E639 /* MBGoDesignLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C95169F1B594B640007E639 /* MBGoDesignLine.m */; };
+		4C9516A31B5A00B70007E639 /* MBGoDesignLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9516A21B5A00B70007E639 /* MBGoDesignLineView.m */; };
 		4CBCA9941B52B8C900A63199 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBCA9931B52B8C900A63199 /* Cocoa.framework */; };
 		4CBCA99E1B52B8C900A63199 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBCA99C1B52B8C900A63199 /* InfoPlist.strings */; };
 		4CBCA9A01B52B8C900A63199 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBCA99F1B52B8C900A63199 /* main.m */; };
@@ -33,6 +35,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4C95169E1B594B640007E639 /* MBGoDesignLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBGoDesignLine.h; sourceTree = "<group>"; };
+		4C95169F1B594B640007E639 /* MBGoDesignLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBGoDesignLine.m; sourceTree = "<group>"; };
+		4C9516A11B5A00B70007E639 /* MBGoDesignLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBGoDesignLineView.h; sourceTree = "<group>"; };
+		4C9516A21B5A00B70007E639 /* MBGoDesignLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBGoDesignLineView.m; sourceTree = "<group>"; };
 		4CBCA9901B52B8C900A63199 /* GoDesign.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoDesign.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CBCA9931B52B8C900A63199 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4CBCA9961B52B8C900A63199 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -125,6 +131,10 @@
 				4CBCA9D11B52BD1F00A63199 /* MBGoDesignWindowController.m */,
 				4CBCA9C71B52B90E00A63199 /* MBGoDesignImageView.h */,
 				4CBCA9C81B52B90E00A63199 /* MBGoDesignImageView.m */,
+				4C9516A11B5A00B70007E639 /* MBGoDesignLineView.h */,
+				4C9516A21B5A00B70007E639 /* MBGoDesignLineView.m */,
+				4C95169E1B594B640007E639 /* MBGoDesignLine.h */,
+				4C95169F1B594B640007E639 /* MBGoDesignLine.m */,
 				4CBCA9A51B52B8C900A63199 /* MBAppDelegate.h */,
 				4CBCA9A61B52B8C900A63199 /* MBAppDelegate.m */,
 				4CBCA9A81B52B8C900A63199 /* MainMenu.xib */,
@@ -266,7 +276,9 @@
 				4CBCA9A01B52B8C900A63199 /* main.m in Sources */,
 				4CBCA9CB1B52B90E00A63199 /* MBGoDesignImageView.m in Sources */,
 				4CBCA9D21B52BD1F00A63199 /* MBGoDesignWindowController.m in Sources */,
+				4C9516A31B5A00B70007E639 /* MBGoDesignLineView.m in Sources */,
 				4CBCA9A71B52B8C900A63199 /* MBAppDelegate.m in Sources */,
+				4C9516A01B594B640007E639 /* MBGoDesignLine.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,6 +491,7 @@
 				4CBCA9C31B52B8C900A63199 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4CBCA9C41B52B8C900A63199 /* Build configuration list for PBXNativeTarget "GoDesignTests" */ = {
 			isa = XCConfigurationList;
@@ -487,6 +500,7 @@
 				4CBCA9C61B52B8C900A63199 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

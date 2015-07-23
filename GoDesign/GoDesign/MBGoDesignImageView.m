@@ -7,15 +7,20 @@
 //
 
 #import "MBGoDesignImageView.h"
+#import "MBGoDesignLineView.h"
 
 @interface MBGoDesignImageView () <NSDraggingDestination>
 {
     BOOL highlight;
 }
 
+@property NSMutableArray* measuringlines;
+
 @property NSBezierPath *path;
 @property NSPoint startPoint;
 @property NSPoint endPoint;
+
+@property NSTrackingArea* trackingArea;
 
 @end
 
@@ -28,6 +33,17 @@
         // Initialization code here.
     }
     return self;
+}
+
+- (void)awakeFromNib
+{
+    _measuringlines = [NSMutableArray array];
+    _startPoint = CGPointZero;
+    
+    _trackingArea = [[NSTrackingArea alloc] initWithRect:self.frame
+                                                options: (NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingActiveInKeyWindow )
+                                                  owner:self userInfo:nil];
+    [self addTrackingArea:_trackingArea];
 }
 
 - (void)drawRect:(NSRect)dirtyRect
@@ -45,11 +61,72 @@
         [NSBezierPath strokeRect:dirtyRect];
     }
     
-    [[NSColor redColor] set];
-    [self.path setLineWidth:2];
-    [self.path stroke];
+    [_measuringlines enumerateObjectsUsingBlock:^(MBGoDesignLineView* lineView, NSUInteger idx, BOOL *stop) {
+        [lineView setNeedsDisplay:YES];
+    }];
 }
 
+#pragma mark - Mouse Event Methods
+
+/*
+ Override NSResponder's mouse handling methods to respond to the events we want.
+ */
+
+// Start drawing a new squiggle on mouse down.
+- (void)mouseDown:(NSEvent *)event {
+    
+	// Convert from the window's coordinate system to this view's coordinates.
+    NSPoint locationInView = [self convertPoint:event.locationInWindow fromView:nil];
+    if (CGPointEqualToPoint(_startPoint, CGPointZero)) {
+        _startPoint = locationInView;
+        CGRect lineViewFrame = CGRectMake(_startPoint.x, _startPoint.y, 0, 10);
+        MBGoDesignLineView* lineView = [[MBGoDesignLineView alloc] initWithFrame:lineViewFrame];
+        
+        [_measuringlines addObject:lineView];
+        [self addSubview:lineView];
+    } else {
+        _startPoint = CGPointZero;
+    }
+    
+    [self setNeedsDisplay:YES];
+}
+
+// Draw to end point on existing squiggle on mouse drag.
+- (void)mouseDragged:(NSEvent *)event {
+    
+	// Convert from the window's coordinate system to this view's coordinates.
+//    NSPoint locationInView = [self convertPoint:event.locationInWindow fromView:nil];
+//    MBGoDesignLineView* curLineView = _measuringlines.lastObject;
+//    CGRect lineViewFrame = curLineView.frame;
+//    lineViewFrame.size.width = ABS(locationInView.x - lineViewFrame.origin.x);
+//    curLineView.frame = lineViewFrame;
+//    
+//    [self setNeedsDisplay:YES];
+}
+
+- (void)mouseMoved:(NSEvent *)theEvent
+{
+    if (!CGPointEqualToPoint(_startPoint, CGPointZero)) {
+        NSPoint locationInView = [self convertPoint:theEvent.locationInWindow fromView:nil];
+        MBGoDesignLineView* curLineView = _measuringlines.lastObject;
+        
+        _endPoint = locationInView;
+        CGFloat width = ABS(_endPoint.x - _startPoint.x);
+        CGFloat height = ABS(_endPoint.y - _startPoint.y);
+        
+        if (width > height) {
+            curLineView.lineAxis = LineHorizontal;
+        } else {
+            curLineView.lineAxis = LineVertical;
+        }
+        
+        CGRect lineViewFrame = curLineView.frame;
+        lineViewFrame.size.width = ABS(locationInView.x - lineViewFrame.origin.x);
+        curLineView.frame = lineViewFrame;
+        
+        [self setNeedsDisplay:YES];
+    }
+}
 
 #pragma mark - Destination Operations
 
@@ -147,55 +224,5 @@
     
     return YES;
 }
-
-#pragma mark - Mouse Event Methods
-
-/*
- Override two of NSResponder's mouse handling methods to respond to the events we want.
- */
-
-// Start drawing a new squiggle on mouse down.
-- (void)mouseDown:(NSEvent *)event {
-    
-	// Convert from the window's coordinate system to this view's coordinates.
-    _startPoint = [self convertPoint:event.locationInWindow fromView:nil];
-    
-    // Create a default NSBezierPath.
-    _path = [NSBezierPath bezierPath];
-    
-    // Set the initial point of the path to be "initialPoint".
-    [_path moveToPoint:_startPoint];
-    
-//    ASCSquiggle *newSquiggle = [[ASCSquiggle alloc] initWithInitialPoint:locationInView];
-//    
-//    CGFloat red     = randomComponent(),
-//    green   = randomComponent(),
-//    blue    = randomComponent(),
-//    alpha   = randomComponent() / 2.f + .5f;
-//    
-//    newSquiggle.color = [NSColor colorWithCalibratedRed:red green:green blue:blue alpha:alpha];
-//    
-//    newSquiggle.thickness = 1 + 3.f * randomComponent();
-//    
-//    [self.squiggles addObject:newSquiggle];
-    
-    [self setNeedsDisplay:YES];
-}
-
-// Draw points on existing squiggle on mouse drag.
-- (void)mouseDragged:(NSEvent *)event {
-    
-	// Convert from the window's coordinate system to this view's coordinates.
-    NSPoint locationInView = [self convertPoint:event.locationInWindow fromView:nil];
-    _endPoint = NSMakePoint(locationInView.x, _startPoint.y);
-    [self.path lineToPoint:_endPoint];
-    
-//    ASCSquiggle *currentSquiggle = [self.squiggles lastObject];
-//    
-//    [currentSquiggle addPoint:locationInView];
-    
-    [self setNeedsDisplay:YES];
-}
-
 
 @end
