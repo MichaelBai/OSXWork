@@ -81,6 +81,7 @@
         _startPoint = locationInView;
         CGRect lineViewFrame = CGRectMake(_startPoint.x, _startPoint.y, 0, 10);
         MBGoDesignLineView* lineView = [[MBGoDesignLineView alloc] initWithFrame:lineViewFrame];
+        lineView.lineAxis = LineHorizontal;
         
         [_measuringlines addObject:lineView];
         [self addSubview:lineView];
@@ -110,19 +111,26 @@
         NSPoint locationInView = [self convertPoint:theEvent.locationInWindow fromView:nil];
         MBGoDesignLineView* curLineView = _measuringlines.lastObject;
         
-        _endPoint = locationInView;
-        CGFloat width = ABS(_endPoint.x - _startPoint.x);
-        CGFloat height = ABS(_endPoint.y - _startPoint.y);
-        
-        if (width > height) {
-            curLineView.lineAxis = LineHorizontal;
-        } else {
-            curLineView.lineAxis = LineVertical;
+        // TODO: duplicate code here, need to refact
+        if (curLineView.lineAxis == LineHorizontal) {
+            NSLog(@"%@", NSStringFromPoint(_startPoint));
+            CGFloat width = ABS(locationInView.x - _startPoint.x);
+            if (locationInView.x > _startPoint.x) {
+                curLineView.lineDirection = LineRight;
+                
+                CGRect lineViewFrame = curLineView.frame;
+                lineViewFrame.origin.x = _startPoint.x;
+                lineViewFrame.size.width = width;
+                curLineView.frame = lineViewFrame;
+            } else {
+                curLineView.lineDirection = LineLeft;
+                
+                CGRect lineViewFrame = curLineView.frame;
+                lineViewFrame.size.width = width;
+                lineViewFrame.origin.x = locationInView.x;
+                curLineView.frame = lineViewFrame;
+            }
         }
-        
-        CGRect lineViewFrame = curLineView.frame;
-        lineViewFrame.size.width = ABS(locationInView.x - lineViewFrame.origin.x);
-        curLineView.frame = lineViewFrame;
         
         [self setNeedsDisplay:YES];
     }
