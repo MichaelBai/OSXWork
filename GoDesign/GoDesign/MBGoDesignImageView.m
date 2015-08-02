@@ -40,7 +40,7 @@
     _measuringlines = [NSMutableArray array];
     _startPoint = CGPointZero;
     
-    _trackingArea = [[NSTrackingArea alloc] initWithRect:self.frame
+    _trackingArea = [[NSTrackingArea alloc] initWithRect:self.bounds
                                                 options: (NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingActiveInKeyWindow )
                                                   owner:self userInfo:nil];
     [self addTrackingArea:_trackingArea];
@@ -113,7 +113,7 @@
         
         // TODO: duplicate code here, need to refact
         if (curLineView.lineAxis == LineHorizontal) {
-            NSLog(@"%@", NSStringFromPoint(_startPoint));
+            NSLog(@"%@ %@", NSStringFromPoint(_startPoint), NSStringFromPoint(locationInView));
             CGFloat width = ABS(locationInView.x - _startPoint.x);
             if (locationInView.x > _startPoint.x) {
                 curLineView.lineDirection = LineRight;
@@ -223,6 +223,19 @@
         if([NSImage canInitWithPasteboard: [sender draggingPasteboard]]) {
             NSImage *newImage = [[NSImage alloc] initWithPasteboard: [sender draggingPasteboard]];
             [self setImage:newImage];
+            
+            // TODO: get scrren width, make width less than 2/3 screen width
+            // resize window to contain the image
+            // window scroll horizontal and vertical when image is big
+            NSRect imageViewFrame = NSMakeRect(0, 0, newImage.size.width, newImage.size.height);
+            CGFloat screenWidth = 1000;
+            CGFloat windowWidth = self.window.frame.size.width;
+            while (imageViewFrame.size.width > screenWidth) {
+                imageViewFrame.size.width /= 2;
+                imageViewFrame.size.height /= 2;
+            }
+            imageViewFrame.origin.x = (windowWidth - imageViewFrame.size.width)/2;
+            [self setFrame:imageViewFrame];
         }
         
         //if the drag comes from a file, set the window title to the filename
