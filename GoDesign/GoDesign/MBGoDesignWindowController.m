@@ -10,6 +10,8 @@
 
 @interface MBGoDesignWindowController ()
 
+
+
 @end
 
 @implementation MBGoDesignWindowController

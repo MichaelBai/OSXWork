@@ -7,9 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "MBGoDesignImageView.h"
+#import "MBGoDesignScrollView.h"
 
 @interface MBGoDesignWindowController : NSWindowController
-@property (weak) IBOutlet MBGoDesignImageView *imgView;
+
+@property (weak) IBOutlet MBGoDesignScrollView *scrollView;
 
 @end
