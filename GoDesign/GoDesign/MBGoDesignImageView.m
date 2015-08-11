@@ -17,6 +17,8 @@
 @property NSPoint startPoint;
 @property NSPoint endPoint;
 
+@property NSTrackingArea* trackingArea;
+
 @end
 
 @implementation MBGoDesignImageView
@@ -26,14 +28,24 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
+        _measuringlines = [NSMutableArray array];
+        _startPoint = CGPointZero;
     }
     return self;
 }
 
 - (void)awakeFromNib
 {
-    _measuringlines = [NSMutableArray array];
-    _startPoint = CGPointZero;
+    
+}
+
+- (void)setFrame:(NSRect)frameRect
+{
+    [super setFrame:frameRect];
+    _trackingArea = [[NSTrackingArea alloc] initWithRect:self.bounds
+                                                 options: (NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingActiveInKeyWindow )
+                                                   owner:self userInfo:nil];
+    [self addTrackingArea:_trackingArea];
 }
 
 - (void)drawRect:(NSRect)dirtyRect

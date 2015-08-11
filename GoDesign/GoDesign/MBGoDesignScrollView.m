@@ -17,8 +17,6 @@
 @property (strong, nonatomic) NSView* containerView;
 @property (strong, nonatomic) MBGoDesignImageView *imgView;
 
-@property NSTrackingArea* trackingArea;
-
 @end
 
 @implementation MBGoDesignScrollView
@@ -37,11 +35,6 @@
     [self registerForDraggedTypes:[NSArray arrayWithObjects:NSFilenamesPboardType, nil]];
     [self setDocumentView:self.containerView];
     [self.containerView addSubview:self.imgView];
-    
-    _trackingArea = [[NSTrackingArea alloc] initWithRect:self.bounds
-                                                 options: (NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingActiveInKeyWindow )
-                                                   owner:self userInfo:nil];
-    [self addTrackingArea:_trackingArea];
 }
 
 - (void)drawRect:(NSRect)dirtyRect
