@@ -21,6 +21,8 @@
 
 @property NSTrackingArea* trackingArea;
 
+@property MBGoDesignLineView* autoLine;
+
 @end
 
 @implementation MBGoDesignImageView
@@ -77,6 +79,19 @@
 
 // Start drawing a new squiggle on mouse down.
 - (void)mouseDown:(NSEvent *)event {
+    // TODO: add length of auto line, add vertical auto line
+    if (_lineMode == ModeAuto) {
+        if (_autoLine) {
+            MBGoDesignLineView* curAutoLine = [[MBGoDesignLineView alloc] initWithFrame:_autoLine.frame lineAxis:_autoLine.lineAxis];
+            [_measuringlines removeLastObject];
+            _autoLine = nil;
+            [_measuringlines addObject:curAutoLine];
+            
+            
+            [self setNeedsDisplay:YES];
+        }
+        return;
+    }
     
 	// Convert from the window's coordinate system to this view's coordinates.
     NSPoint locationInView = [self convertPoint:event.locationInWindow fromView:nil];
@@ -122,8 +137,42 @@
 
 - (void)mouseMoved:(NSEvent *)theEvent
 {
+    NSPoint locationInView = [self convertPoint:theEvent.locationInWindow fromView:nil];
+    if (_lineMode == ModeAuto) {
+        if (!_autoLine) {
+            _autoLine = [[MBGoDesignLineView alloc] initWithFrame:NSZeroRect lineAxis:_lineAxis];
+            
+            [_measuringlines addObject:_autoLine];
+            [self addSubview:_autoLine];
+        }
+        NSColor* pixelColor = [self examinePixelColor:theEvent];
+        
+        NSPoint leftPoint, rightPoint;
+        leftPoint = NSMakePoint(0, locationInView.y);
+        rightPoint = NSMakePoint(0, locationInView.y);
+        for (int i = locationInView.x; i >= 0; i--) {
+            if (![self isSameColor:pixelColor inPoint:NSMakePoint(i, locationInView.y)]) {
+                leftPoint.x = i;
+                break;
+            }
+        }
+        for (int i = locationInView.x; i <= 1000; i++) {
+            if (![self isSameColor:pixelColor inPoint:NSMakePoint(i, locationInView.y)]) {
+                rightPoint.x = i;
+                break;
+            }
+        }
+        NSLog(@"%.2f %.2f", leftPoint.x, rightPoint.x);
+        
+        CGFloat width = ABS(leftPoint.x - rightPoint.x);
+        NSRect lineFrame = NSMakeRect(leftPoint.x, locationInView.y, width, 10);
+        _autoLine.frame = lineFrame;
+        
+        [self setNeedsDisplay:YES];
+        
+        return;
+    }
     if (!CGPointEqualToPoint(_startPoint, CGPointZero)) {
-        NSPoint locationInView = [self convertPoint:theEvent.locationInWindow fromView:nil];
         MBGoDesignLineView* curLineView = _measuringlines.lastObject;
         MBGoDesignLineLengthView* curLineLengthView = _lineLengths.lastObject;
         
@@ -161,6 +210,57 @@
         
         [self setNeedsDisplay:YES];
     }
+}
+
+- (void)mouseExited:(NSEvent *)theEvent
+{
+    if (_lineMode == ModeAuto) {
+        if (_autoLine) {
+            [_measuringlines removeLastObject];
+            [_autoLine removeFromSuperview];
+            _autoLine = nil;
+        }
+    }
+}
+
+#pragma mark - Color
+
+- (NSColor*) examinePixelColor:(NSEvent *) theEvent
+{
+    NSPoint where;
+    NSColor *pixelColor;
+    CGFloat  red, green, blue;
+    where = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+    // NSReadPixel pulls data out of the current focused graphics context,
+    // so you must first call lockFocus.
+    [self lockFocus];
+    pixelColor = NSReadPixel(where);
+    // Always balance lockFocus with unlockFocus.
+    [self unlockFocus];
+    red = [pixelColor redComponent];
+    green = [pixelColor greenComponent];
+    blue = [pixelColor blueComponent];
+    // Your code to do something with the color values
+    
+    return pixelColor;
+}
+
+- (BOOL)isSameColor:(NSColor*)color inPoint:(NSPoint)pt
+{
+    NSColor *pixelColor;
+    //    CGFloat  red, green, blue;
+    [self lockFocus];
+    pixelColor = NSReadPixel(pt);
+    // Always balance lockFocus with unlockFocus.
+    [self unlockFocus];
+    //    red = [pixelColor redComponent];
+    //    green = [pixelColor greenComponent];
+    //    blue = [pixelColor blueComponent];
+    
+    if ([pixelColor isEqual:color]) {
+        return YES;
+    }
+    return NO;
 }
 
 @end

@@ -13,6 +13,11 @@ typedef enum : NSUInteger {
     LineVertical
 } LineAxis;
 
+typedef enum : NSUInteger {
+    ModeManual,
+    ModeAuto
+} LineMode;
+
 @interface MBGoDesignConstant : NSObject
 
 @end

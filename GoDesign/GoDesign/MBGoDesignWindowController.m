@@ -35,11 +35,15 @@
 }
 
 - (IBAction)modeChanged:(NSMatrix*)sender {
-    
+    if (sender.selectedRow == 0) {
+        _scrollView.imgView.lineMode = ModeManual;
+    } else {
+        _scrollView.imgView.lineMode = ModeAuto;
+    }
 }
 
 - (IBAction)axisChanged:(NSMatrix*)sender {
-    NSLog(@"%zd", sender.selectedRow);
+//    NSLog(@"%zd", sender.selectedRow);
     if (sender.selectedRow == 0) {
         _scrollView.imgView.lineAxis = LineHorizontal;
     } else {

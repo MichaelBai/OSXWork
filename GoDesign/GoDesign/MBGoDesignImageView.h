@@ -11,5 +11,6 @@
 @interface MBGoDesignImageView : NSImageView
 
 @property LineAxis lineAxis;
+@property LineMode lineMode;
 
 @end
