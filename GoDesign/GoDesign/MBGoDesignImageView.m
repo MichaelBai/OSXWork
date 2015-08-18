@@ -8,10 +8,12 @@
 
 #import "MBGoDesignImageView.h"
 #import "MBGoDesignLineView.h"
+#import "MBGoDesignLineLengthView.h"
 
 @interface MBGoDesignImageView () 
 
 @property NSMutableArray* measuringlines;
+@property NSMutableArray* lineLengths;
 
 @property NSBezierPath *path;
 @property NSPoint startPoint;
@@ -30,6 +32,8 @@
         // Initialization code here.
         _measuringlines = [NSMutableArray array];
         _startPoint = CGPointZero;
+        
+        _lineLengths = [NSMutableArray array];
     }
     return self;
 }
@@ -56,11 +60,13 @@
     //do the usual draw operation to display the image
     [super drawRect:dirtyRect];
     
-    
-    
-    [_measuringlines enumerateObjectsUsingBlock:^(MBGoDesignLineView* lineView, NSUInteger idx, BOOL *stop) {
-        [lineView setNeedsDisplay:YES];
-    }];
+    MBGoDesignLineView* lastLineView = _measuringlines.lastObject;
+    [lastLineView setNeedsDisplay:YES];
+//    [_measuringlines enumerateObjectsUsingBlock:^(MBGoDesignLineView* lineView, NSUInteger idx, BOOL *stop) {
+//        [lineView setNeedsDisplay:YES];
+//    }];
+    MBGoDesignLineLengthView* lastLineLengthView = _lineLengths.lastObject;
+    [lastLineLengthView setNeedsDisplay:YES];
 }
 
 #pragma mark - Mouse Event Methods
@@ -76,14 +82,27 @@
     NSPoint locationInView = [self convertPoint:event.locationInWindow fromView:nil];
     if (CGPointEqualToPoint(_startPoint, CGPointZero)) {
         _startPoint = locationInView;
-        CGRect lineViewFrame = CGRectMake(_startPoint.x, _startPoint.y, 0, 10);
+        NSRect lineViewFrame = NSMakeRect(_startPoint.x, _startPoint.y, 0, 10);
         MBGoDesignLineView* lineView = [[MBGoDesignLineView alloc] initWithFrame:lineViewFrame];
         lineView.lineAxis = LineHorizontal;
         
         [_measuringlines addObject:lineView];
         [self addSubview:lineView];
+        
+        // add line length view
+        NSRect lineLengthFrame = NSMakeRect(locationInView.x, locationInView.y, 30, 20);
+        MBGoDesignLineLengthView* lineLengthView = [[MBGoDesignLineLengthView alloc] initWithFrame:lineLengthFrame];
+        [_lineLengths addObject:lineLengthView];
+        [self addSubview:lineLengthView];
     } else {
         _startPoint = CGPointZero;
+        
+        MBGoDesignLineLengthView* curLineLengthView = _lineLengths.lastObject;
+        NSRect lineLengthFrame = curLineLengthView.frame;
+        MBGoDesignLineView* curLineView = _measuringlines.lastObject;
+        // TODO: need adjust by line direction, here is lineright
+        lineLengthFrame.origin = NSMakePoint(curLineView.frame.origin.x + curLineView.frame.size.width + 3, curLineView.frame.origin.y);
+        curLineLengthView.frame = lineLengthFrame;
     }
     
     [self setNeedsDisplay:YES];
@@ -107,10 +126,11 @@
     if (!CGPointEqualToPoint(_startPoint, CGPointZero)) {
         NSPoint locationInView = [self convertPoint:theEvent.locationInWindow fromView:nil];
         MBGoDesignLineView* curLineView = _measuringlines.lastObject;
+        MBGoDesignLineLengthView* curLineLengthView = _lineLengths.lastObject;
         
         // TODO: duplicate code here, need to refact
         if (curLineView.lineAxis == LineHorizontal) {
-            NSLog(@"%@ %@", NSStringFromPoint(_startPoint), NSStringFromPoint(locationInView));
+//            NSLog(@"%@ %@", NSStringFromPoint(_startPoint), NSStringFromPoint(locationInView));
             CGFloat width = ABS(locationInView.x - _startPoint.x);
             if (locationInView.x > _startPoint.x) {
                 curLineView.lineDirection = LineRight;
@@ -119,6 +139,9 @@
                 lineViewFrame.origin.x = _startPoint.x;
                 lineViewFrame.size.width = width;
                 curLineView.frame = lineViewFrame;
+                
+                curLineLengthView.frame = NSMakeRect(locationInView.x + 3, locationInView.y, 30, 20);
+                curLineLengthView.lineLength = [NSString stringWithFormat:@"%.0f", width];
             } else {
                 curLineView.lineDirection = LineLeft;
                 

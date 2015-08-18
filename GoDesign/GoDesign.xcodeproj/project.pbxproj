@@ -10,6 +10,7 @@
 		4C9516A01B594B640007E639 /* MBGoDesignLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C95169F1B594B640007E639 /* MBGoDesignLine.m */; };
 		4C9516A31B5A00B70007E639 /* MBGoDesignLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9516A21B5A00B70007E639 /* MBGoDesignLineView.m */; };
 		4C9516A61B6FB0160007E639 /* MBGoDesignScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9516A51B6FB0160007E639 /* MBGoDesignScrollView.m */; };
+		4CAC82FB1B8218EF00359686 /* MBGoDesignLineLengthView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAC82FA1B8218EF00359686 /* MBGoDesignLineLengthView.m */; };
 		4CBCA9941B52B8C900A63199 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBCA9931B52B8C900A63199 /* Cocoa.framework */; };
 		4CBCA99E1B52B8C900A63199 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBCA99C1B52B8C900A63199 /* InfoPlist.strings */; };
 		4CBCA9A01B52B8C900A63199 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBCA99F1B52B8C900A63199 /* main.m */; };
@@ -42,6 +43,8 @@
 		4C9516A21B5A00B70007E639 /* MBGoDesignLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBGoDesignLineView.m; sourceTree = "<group>"; };
 		4C9516A41B6FB0160007E639 /* MBGoDesignScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBGoDesignScrollView.h; sourceTree = "<group>"; };
 		4C9516A51B6FB0160007E639 /* MBGoDesignScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBGoDesignScrollView.m; sourceTree = "<group>"; };
+		4CAC82F91B8218EF00359686 /* MBGoDesignLineLengthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBGoDesignLineLengthView.h; sourceTree = "<group>"; };
+		4CAC82FA1B8218EF00359686 /* MBGoDesignLineLengthView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBGoDesignLineLengthView.m; sourceTree = "<group>"; };
 		4CBCA9901B52B8C900A63199 /* GoDesign.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoDesign.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CBCA9931B52B8C900A63199 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4CBCA9961B52B8C900A63199 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -138,6 +141,8 @@
 				4CBCA9C81B52B90E00A63199 /* MBGoDesignImageView.m */,
 				4C9516A11B5A00B70007E639 /* MBGoDesignLineView.h */,
 				4C9516A21B5A00B70007E639 /* MBGoDesignLineView.m */,
+				4CAC82F91B8218EF00359686 /* MBGoDesignLineLengthView.h */,
+				4CAC82FA1B8218EF00359686 /* MBGoDesignLineLengthView.m */,
 				4C95169E1B594B640007E639 /* MBGoDesignLine.h */,
 				4C95169F1B594B640007E639 /* MBGoDesignLine.m */,
 				4CBCA9A51B52B8C900A63199 /* MBAppDelegate.h */,
@@ -279,6 +284,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CBCA9A01B52B8C900A63199 /* main.m in Sources */,
+				4CAC82FB1B8218EF00359686 /* MBGoDesignLineLengthView.m in Sources */,
 				4CBCA9CB1B52B90E00A63199 /* MBGoDesignImageView.m in Sources */,
 				4C9516A61B6FB0160007E639 /* MBGoDesignScrollView.m in Sources */,
 				4CBCA9D21B52BD1F00A63199 /* MBGoDesignWindowController.m in Sources */,

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13F1096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13F1112" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
     </dependencies>
@@ -13,6 +13,8 @@
         <customObject id="-3" userLabel="Application"/>
         <customObject id="Voe-Tx-rLC" customClass="MBGoDesignWindowController">
             <connections>
+                <outlet property="axis" destination="j8y-gM-EfV" id="IyW-HZ-3cp"/>
+                <outlet property="mode" destination="K1j-gy-WfP" id="xVr-Mq-EAO"/>
                 <outlet property="scrollView" destination="Q2a-Lu-7pF" id="LU6-pb-Mpe"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="150-jF-5rE"/>
             </connections>
@@ -677,14 +679,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <scrollView autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q2a-Lu-7pF" customClass="MBGoDesignScrollView">
-                        <rect key="frame" x="10" y="11" width="738" height="523"/>
+                        <rect key="frame" x="108" y="10" width="640" height="524"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <clipView key="contentView" id="ppg-C8-qh2">
-                            <rect key="frame" x="1" y="1" width="736" height="521"/>
+                            <rect key="frame" x="1" y="1" width="638" height="522"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ws5-8q-h2n">
-                                    <rect key="frame" x="0.0" y="0.0" width="736" height="521"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="638" height="522"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                             </subviews>
@@ -698,12 +700,64 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
+                    <matrix verticalHuggingPriority="750" fixedFrame="YES" allowsEmptySelection="NO" autorecalculatesCellSize="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K1j-gy-WfP">
+                        <rect key="frame" x="10" y="435" width="105" height="38"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        <size key="cellSize" width="98" height="18"/>
+                        <size key="intercellSpacing" width="4" height="2"/>
+                        <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" inset="2" id="WNX-22-r3S">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <cells>
+                            <column>
+                                <buttonCell type="radio" title="Manual" imagePosition="left" alignment="left" state="on" tag="1" inset="2" id="IaZ-pw-vFg">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <buttonCell type="radio" title="Automatical" imagePosition="left" alignment="left" inset="2" id="OHu-ip-VD6">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </column>
+                        </cells>
+                        <connections>
+                            <action selector="modeChanged:" target="Voe-Tx-rLC" id="N3d-Hc-VYr"/>
+                        </connections>
+                    </matrix>
+                    <matrix verticalHuggingPriority="750" fixedFrame="YES" allowsEmptySelection="NO" autorecalculatesCellSize="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j8y-gM-EfV">
+                        <rect key="frame" x="10" y="337" width="95" height="38"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        <size key="cellSize" width="88" height="18"/>
+                        <size key="intercellSpacing" width="4" height="2"/>
+                        <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" inset="2" id="ZkF-fY-dsK">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <cells>
+                            <column>
+                                <buttonCell type="radio" title="Horizontal" imagePosition="left" alignment="left" state="on" tag="1" inset="2" id="F8q-1g-BB5">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <buttonCell type="radio" title="Vertical" imagePosition="left" alignment="left" inset="2" id="pif-QG-ZTm">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </column>
+                        </cells>
+                        <connections>
+                            <action selector="axisChanged:" target="Voe-Tx-rLC" id="tFv-lI-JSe"/>
+                        </connections>
+                    </matrix>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="Q2a-Lu-7pF" secondAttribute="trailing" constant="10" id="8kI-Ud-ee1"/>
                     <constraint firstItem="Q2a-Lu-7pF" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="10" id="POm-5u-hcj"/>
-                    <constraint firstItem="Q2a-Lu-7pF" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="10" id="SnN-OR-u6U"/>
-                    <constraint firstAttribute="bottom" secondItem="Q2a-Lu-7pF" secondAttribute="bottom" constant="11" id="qu0-zf-KAP"/>
+                    <constraint firstAttribute="bottom" secondItem="Q2a-Lu-7pF" secondAttribute="bottom" constant="10" id="qu0-zf-KAP"/>
+                    <constraint firstItem="Q2a-Lu-7pF" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="108" id="vL4-Lh-wU4"/>
                 </constraints>
             </view>
         </window>

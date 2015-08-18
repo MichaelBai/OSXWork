@@ -12,5 +12,7 @@
 @interface MBGoDesignWindowController : NSWindowController
 
 @property (weak) IBOutlet MBGoDesignScrollView *scrollView;
+@property (weak) IBOutlet NSMatrix *mode;
+@property (weak) IBOutlet NSMatrix *axis;
 
 @end
