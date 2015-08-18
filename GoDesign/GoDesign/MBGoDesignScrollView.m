@@ -7,7 +7,6 @@
 //
 
 #import "MBGoDesignScrollView.h"
-#import "MBGoDesignImageView.h"
 
 @interface MBGoDesignScrollView () <NSDraggingDestination>
 {
@@ -15,7 +14,6 @@
 }
 
 @property (strong, nonatomic) NSView* containerView;
-@property (strong, nonatomic) MBGoDesignImageView *imgView;
 
 @end
 

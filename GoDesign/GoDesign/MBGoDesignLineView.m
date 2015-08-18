@@ -16,12 +16,13 @@
 
 @implementation MBGoDesignLineView
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame lineAxis:(LineAxis)lineAxis
 {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
-        _line = [[MBGoDesignLine alloc] initWithFrame:frame];
+        _lineAxis = lineAxis;
+        _line = [[MBGoDesignLine alloc] initWithFrame:frame lineAxis:lineAxis];
     }
     return self;
 }

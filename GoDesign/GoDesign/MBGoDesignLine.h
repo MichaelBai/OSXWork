@@ -8,18 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-typedef enum : NSUInteger {
-    LineHorizontal,
-    LineVertical
-} LineAxis;
-
-typedef enum : NSUInteger {
-    LineLeft,
-    LineRight,
-    LineUp,
-    LineDown
-} LineDirection;
-
 @interface MBGoDesignLine : NSObject
 
 @property NSBezierPath* path;
@@ -28,7 +16,9 @@ typedef enum : NSUInteger {
 
 @property NSRect viewFrame;
 
-- (instancetype)initWithFrame:(NSRect)frame;
+@property LineAxis lineAxis;
+
+- (instancetype)initWithFrame:(NSRect)frame lineAxis:(LineAxis)lineAxis;
 
 - (void)draw;
 

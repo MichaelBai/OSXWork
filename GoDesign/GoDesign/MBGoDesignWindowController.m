@@ -21,6 +21,8 @@
     self = [super initWithWindow:window];
     if (self) {
         // Initialization code here.
+        [_mode selectCellAtRow:0 column:0];
+        [_axis selectCellAtRow:0 column:0];
     }
     return self;
 }
@@ -32,10 +34,17 @@
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
 
-- (IBAction)modeChanged:(id)sender {
+- (IBAction)modeChanged:(NSMatrix*)sender {
+    
 }
 
-- (IBAction)axisChanged:(id)sender {
+- (IBAction)axisChanged:(NSMatrix*)sender {
+    NSLog(@"%zd", sender.selectedRow);
+    if (sender.selectedRow == 0) {
+        _scrollView.imgView.lineAxis = LineHorizontal;
+    } else {
+        _scrollView.imgView.lineAxis = LineVertical;
+    }
 }
 
 

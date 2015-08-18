@@ -10,4 +10,6 @@
 
 @interface MBGoDesignImageView : NSImageView
 
+@property LineAxis lineAxis;
+
 @end

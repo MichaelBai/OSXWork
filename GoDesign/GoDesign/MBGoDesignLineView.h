@@ -12,6 +12,7 @@
 @interface MBGoDesignLineView : NSView
 
 @property LineAxis lineAxis;
-@property LineDirection lineDirection;
+
+- (instancetype)initWithFrame:(NSRect)frame lineAxis:(LineAxis)lineAxis;
 
 @end

@@ -7,7 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "MBGoDesignImageView.h"
 
 @interface MBGoDesignScrollView : NSScrollView
+
+@property (strong, nonatomic) MBGoDesignImageView *imgView;
 
 @end

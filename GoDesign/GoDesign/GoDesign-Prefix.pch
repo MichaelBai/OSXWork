@@ -7,4 +7,6 @@
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
     #import <QuartzCore/QuartzCore.h>
+
+    #import "MBGoDesignConstant.h"
 #endif

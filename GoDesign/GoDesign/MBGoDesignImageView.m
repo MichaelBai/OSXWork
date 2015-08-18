@@ -82,9 +82,8 @@
     NSPoint locationInView = [self convertPoint:event.locationInWindow fromView:nil];
     if (CGPointEqualToPoint(_startPoint, CGPointZero)) {
         _startPoint = locationInView;
-        NSRect lineViewFrame = NSMakeRect(_startPoint.x, _startPoint.y, 0, 10);
-        MBGoDesignLineView* lineView = [[MBGoDesignLineView alloc] initWithFrame:lineViewFrame];
-        lineView.lineAxis = LineHorizontal;
+        NSRect lineViewFrame = NSMakeRect(_startPoint.x, _startPoint.y, 0, 0);
+        MBGoDesignLineView* lineView = [[MBGoDesignLineView alloc] initWithFrame:lineViewFrame lineAxis:_lineAxis];
         
         [_measuringlines addObject:lineView];
         [self addSubview:lineView];
@@ -132,24 +131,32 @@
         if (curLineView.lineAxis == LineHorizontal) {
 //            NSLog(@"%@ %@", NSStringFromPoint(_startPoint), NSStringFromPoint(locationInView));
             CGFloat width = ABS(locationInView.x - _startPoint.x);
+            CGRect lineViewFrame = curLineView.frame;
+            lineViewFrame.size.height = 10;
+            lineViewFrame.size.width = width;
             if (locationInView.x > _startPoint.x) {
-                curLineView.lineDirection = LineRight;
-                
-                CGRect lineViewFrame = curLineView.frame;
                 lineViewFrame.origin.x = _startPoint.x;
-                lineViewFrame.size.width = width;
-                curLineView.frame = lineViewFrame;
-                
-                curLineLengthView.frame = NSMakeRect(locationInView.x + 3, locationInView.y, 30, 20);
-                curLineLengthView.lineLength = [NSString stringWithFormat:@"%.0f", width];
             } else {
-                curLineView.lineDirection = LineLeft;
-                
-                CGRect lineViewFrame = curLineView.frame;
-                lineViewFrame.size.width = width;
                 lineViewFrame.origin.x = locationInView.x;
-                curLineView.frame = lineViewFrame;
             }
+            curLineView.frame = lineViewFrame;
+            
+            curLineLengthView.frame = NSMakeRect(locationInView.x + 3, locationInView.y, 30, 20);
+            curLineLengthView.lineLength = [NSString stringWithFormat:@"%.0f", width];
+        } else { // Vertical
+            CGFloat height = ABS(locationInView.y - _startPoint.y);
+            CGRect lineViewFrame = curLineView.frame;
+            lineViewFrame.size.width = 10;
+            lineViewFrame.size.height = height;
+            if (locationInView.y > _startPoint.y) {
+                lineViewFrame.origin.y = _startPoint.y;
+            } else {
+                lineViewFrame.origin.y = locationInView.y;
+            }
+            curLineView.frame = lineViewFrame;
+            
+            curLineLengthView.frame = NSMakeRect(locationInView.x + 3, locationInView.y, 30, 20);
+            curLineLengthView.lineLength = [NSString stringWithFormat:@"%.0f", height];
         }
         
         [self setNeedsDisplay:YES];
