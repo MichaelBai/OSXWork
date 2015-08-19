@@ -87,7 +87,6 @@
             _autoLine = nil;
             [_measuringlines addObject:curAutoLine];
             
-            
             [self setNeedsDisplay:YES];
         }
         return;
@@ -144,29 +143,66 @@
             
             [_measuringlines addObject:_autoLine];
             [self addSubview:_autoLine];
+            
+            // add line length view
+            // TODO: duplicate here with code in MouseDown:
+            NSRect lineLengthFrame = NSMakeRect(locationInView.x, locationInView.y, 30, 20);
+            MBGoDesignLineLengthView* lineLengthView = [[MBGoDesignLineLengthView alloc] initWithFrame:lineLengthFrame];
+            [_lineLengths addObject:lineLengthView];
+            [self addSubview:lineLengthView];
         }
         NSColor* pixelColor = [self examinePixelColor:theEvent];
         
-        NSPoint leftPoint, rightPoint;
-        leftPoint = NSMakePoint(0, locationInView.y);
-        rightPoint = NSMakePoint(0, locationInView.y);
-        for (int i = locationInView.x; i >= 0; i--) {
-            if (![self isSameColor:pixelColor inPoint:NSMakePoint(i, locationInView.y)]) {
-                leftPoint.x = i;
-                break;
-            }
-        }
-        for (int i = locationInView.x; i <= 1000; i++) {
-            if (![self isSameColor:pixelColor inPoint:NSMakePoint(i, locationInView.y)]) {
-                rightPoint.x = i;
-                break;
-            }
-        }
-        NSLog(@"%.2f %.2f", leftPoint.x, rightPoint.x);
+        MBGoDesignLineLengthView* curLineLengthView = _lineLengths.lastObject;
         
-        CGFloat width = ABS(leftPoint.x - rightPoint.x);
-        NSRect lineFrame = NSMakeRect(leftPoint.x, locationInView.y, width, 10);
-        _autoLine.frame = lineFrame;
+        if (_lineAxis == LineHorizontal) {
+            NSPoint leftPoint, rightPoint;
+            leftPoint = NSMakePoint(0, locationInView.y);
+            rightPoint = NSMakePoint(0, locationInView.y);
+            for (int i = locationInView.x; i >= 0; i--) {
+                if (![self isSameColor:pixelColor inPoint:NSMakePoint(i, locationInView.y)]) {
+                    leftPoint.x = i;
+                    break;
+                }
+            }
+            for (int i = locationInView.x; i <= self.frame.size.width; i++) {
+                if (![self isSameColor:pixelColor inPoint:NSMakePoint(i, locationInView.y)]) {
+                    rightPoint.x = i;
+                    break;
+                }
+            }
+//            NSLog(@"%.2f %.2f", leftPoint.x, rightPoint.x);
+            
+            CGFloat width = ABS(leftPoint.x - rightPoint.x);
+            NSRect lineFrame = NSMakeRect(leftPoint.x, locationInView.y, width, 10);
+            _autoLine.frame = lineFrame;
+            
+            curLineLengthView.frame = NSMakeRect(locationInView.x + 3, locationInView.y, 30, 20);
+            curLineLengthView.lineLength = [NSString stringWithFormat:@"%.0f", width];
+        } else {
+            NSPoint upPoint, downPoint;
+            upPoint = NSMakePoint(0, locationInView.y);
+            downPoint = NSMakePoint(0, locationInView.y);
+            for (int i = locationInView.y; i >= 0; i--) {
+                if (![self isSameColor:pixelColor inPoint:NSMakePoint(locationInView.x, i)]) {
+                    upPoint.y = i;
+                    break;
+                }
+            }
+            for (int i = locationInView.y; i <= self.frame.size.height; i++) {
+                if (![self isSameColor:pixelColor inPoint:NSMakePoint(locationInView.x, i)]) {
+                    downPoint.y = i;
+                    break;
+                }
+            }
+            
+            CGFloat height = ABS(upPoint.y - downPoint.y);
+            NSRect lineFrame = NSMakeRect(locationInView.x, upPoint.y, 10, height);
+            _autoLine.frame = lineFrame;
+            
+            curLineLengthView.frame = NSMakeRect(locationInView.x + 3, locationInView.y, 30, 20);
+            curLineLengthView.lineLength = [NSString stringWithFormat:@"%.0f", height];
+        }
         
         [self setNeedsDisplay:YES];
         
@@ -178,7 +214,6 @@
         
         // TODO: duplicate code here, need to refact
         if (curLineView.lineAxis == LineHorizontal) {
-//            NSLog(@"%@ %@", NSStringFromPoint(_startPoint), NSStringFromPoint(locationInView));
             CGFloat width = ABS(locationInView.x - _startPoint.x);
             CGRect lineViewFrame = curLineView.frame;
             lineViewFrame.size.height = 10;

@@ -33,7 +33,11 @@
     [self.color set];
     [_path moveToPoint:NSMakePoint(0, 0)];
     if (_lineAxis == LineHorizontal) {
-        [_path lineToPoint:NSMakePoint(_viewFrame.size.width, 0)];
+        [_path lineToPoint:NSMakePoint(0, 10)];
+        [_path moveToPoint:NSMakePoint(0, 5)];
+        [_path lineToPoint:NSMakePoint(_viewFrame.size.width, 5)];
+        [_path moveToPoint:NSMakePoint(_viewFrame.size.width, 0)];
+        [_path lineToPoint:NSMakePoint(_viewFrame.size.width, 10)];
     } else {
         [_path lineToPoint:NSMakePoint(0, _viewFrame.size.height)];
     }
