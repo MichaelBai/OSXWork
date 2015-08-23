@@ -22,26 +22,28 @@
     if (self) {
         // Initialization code here.
         _lineAxis = lineAxis;
-        _line = [[MBGoDesignLine alloc] initWithFrame:frame lineAxis:lineAxis];
     }
     return self;
 }
 
-- (void)setFrame:(NSRect)frameRect
-{
-    [super setFrame:frameRect];
-    _line.viewFrame = frameRect;
-}
+//- (void)setFrame:(NSRect)frameRect
+//{
+//    [super setFrame:frameRect];
+//    _line.viewFrame = frameRect;
+//}
 
 - (void)drawRect:(NSRect)dirtyRect
 {
     [super drawRect:dirtyRect];
-    [[NSColor yellowColor] setFill];
-    NSRectFill(dirtyRect);
     
+//    [[NSColor whiteColor] setFill];
+//    NSRectFill(dirtyRect);
+    NSLog(@"draw rect %@", NSStringFromRect(dirtyRect));
     // Drawing code here.
 //    _line.viewFrame = self.frame;
+    _line = [[MBGoDesignLine alloc] initWithFrame:self.frame lineAxis:self.lineAxis];
     [_line draw];
+    NSLog(@"draw rect END");
 }
 
 @end

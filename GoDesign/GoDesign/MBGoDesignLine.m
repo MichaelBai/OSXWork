@@ -21,7 +21,7 @@
         _path = [NSBezierPath bezierPath];
         _viewFrame = frame;
         _color = [NSColor redColor];
-        _thickness = 2.0f;
+        _thickness = 1.0f;
     }
     return self;
 }
@@ -29,15 +29,16 @@
 #pragma mark - Public Methods
 
 - (void)draw {
-    // Set the color and line width for the drawing context then draw NSBezierPath instance.    
+    // Set the color and line width for the drawing context then draw NSBezierPath instance.
+    
     [self.color set];
-    [_path moveToPoint:NSMakePoint(0, 0)];
+    [_path moveToPoint:NSMakePoint(_thickness/2, 0)];
     if (_lineAxis == LineHorizontal) {
-        [_path lineToPoint:NSMakePoint(0, 10)];
-        [_path moveToPoint:NSMakePoint(0, 5)];
-        [_path lineToPoint:NSMakePoint(_viewFrame.size.width, 5)];
-        [_path moveToPoint:NSMakePoint(_viewFrame.size.width, 0)];
-        [_path lineToPoint:NSMakePoint(_viewFrame.size.width, 10)];
+        [_path lineToPoint:NSMakePoint(_thickness/2, 10)];
+        [_path moveToPoint:NSMakePoint(_thickness/2, 5)];
+        [_path lineToPoint:NSMakePoint(_viewFrame.size.width-_thickness/2, 5)];
+        [_path moveToPoint:NSMakePoint(_viewFrame.size.width-_thickness/2, 0)];
+        [_path lineToPoint:NSMakePoint(_viewFrame.size.width-_thickness/2, 10)];
     } else {
         [_path lineToPoint:NSMakePoint(0, _viewFrame.size.height)];
     }
