@@ -23,6 +23,8 @@
 
 @property MBGoDesignLineView* autoLine;
 
+@property unsigned char* rawData;
+
 @end
 
 @implementation MBGoDesignImageView
@@ -40,9 +42,27 @@
     return self;
 }
 
+- (void)dealloc
+{
+    if (_rawData != NULL) {
+        free(_rawData);
+    }
+}
+
 - (void)awakeFromNib
 {
     
+}
+
+- (void)setImage:(NSImage *)newImage
+{
+    [super setImage:newImage];
+    if (_rawData != NULL) {
+        free(_rawData);
+        _rawData = NULL;
+    }
+//    _rawData = [MBGoDesignImageView getRGBAsFromImage:self.image atX:0 andY:87 count:100];
+    [self drawImageToRGBContext:self.image];
 }
 
 - (void)setFrame:(NSRect)frameRect
@@ -137,6 +157,9 @@
 - (void)mouseMoved:(NSEvent *)theEvent
 {
     NSPoint locationInView = [self convertPoint:theEvent.locationInWindow fromView:nil];
+//    NSLog(@"imageView frame: %@", NSStringFromRect(self.frame));
+    locationInView = NSMakePoint((int)locationInView.x, (int)locationInView.y);
+    NSLog(@"locationInView %@", NSStringFromPoint(locationInView));
     if (_lineMode == ModeAuto) {
         if (!_autoLine) {
             _autoLine = [[MBGoDesignLineView alloc] initWithFrame:NSZeroRect lineAxis:_lineAxis];
@@ -151,29 +174,33 @@
             [_lineLengths addObject:lineLengthView];
             [self addSubview:lineLengthView];
         }
-        NSColor* pixelColor = [self examinePixelColor:theEvent];
+//        NSColor* pixelColor = [self examinePixelColor:theEvent];
         
         MBGoDesignLineLengthView* curLineLengthView = _lineLengths.lastObject;
         
         if (_lineAxis == LineHorizontal) {
             NSPoint leftPoint, rightPoint;
-            leftPoint = NSMakePoint(0, locationInView.y);
-            rightPoint = NSMakePoint(0, locationInView.y);
-            for (int i = locationInView.x; i >= 0; i--) {
-                if (![self isSameColor:pixelColor inPoint:NSMakePoint(i, locationInView.y)]) {
-                    leftPoint.x = i;
-                    break;
-                }
-            }
-            for (int i = locationInView.x; i <= self.frame.size.width; i++) {
-                if (![self isSameColor:pixelColor inPoint:NSMakePoint(i, locationInView.y)]) {
-                    rightPoint.x = i;
-                    break;
-                }
-            }
+            
+            leftPoint = [self getPointSameColorWithPoint:locationInView isStart:YES isHorizontal:YES];
+            rightPoint = [self getPointSameColorWithPoint:locationInView isStart:NO isHorizontal:YES];
+            
+//            leftPoint = NSMakePoint(0, locationInView.y);
+//            rightPoint = NSMakePoint(0, locationInView.y);
+//            for (int i = locationInView.x; i >= 0; i--) {
+//                if (![self isSameColor:pixelColor inPoint:NSMakePoint(i, locationInView.y)]) {
+//                    leftPoint.x = i;
+//                    break;
+//                }
+//            }
+//            for (int i = locationInView.x; i <= self.frame.size.width; i++) {
+//                if (![self isSameColor:pixelColor inPoint:NSMakePoint(i, locationInView.y)]) {
+//                    rightPoint.x = i;
+//                    break;
+//                }
+//            }
 //            NSLog(@"%.2f %.2f", leftPoint.x, rightPoint.x);
             
-            CGFloat width = ABS(leftPoint.x - rightPoint.x);
+            CGFloat width = ABS(leftPoint.x - rightPoint.x) + 1;
             NSRect lineFrame = NSMakeRect(leftPoint.x, locationInView.y, width, 10);
             _autoLine.frame = lineFrame;
             
@@ -181,22 +208,26 @@
             curLineLengthView.lineLength = [NSString stringWithFormat:@"%.0f", width];
         } else {
             NSPoint upPoint, downPoint;
-            upPoint = NSMakePoint(0, locationInView.y);
-            downPoint = NSMakePoint(0, locationInView.y);
-            for (int i = locationInView.y; i >= 0; i--) {
-                if (![self isSameColor:pixelColor inPoint:NSMakePoint(locationInView.x, i)]) {
-                    upPoint.y = i;
-                    break;
-                }
-            }
-            for (int i = locationInView.y; i <= self.frame.size.height; i++) {
-                if (![self isSameColor:pixelColor inPoint:NSMakePoint(locationInView.x, i)]) {
-                    downPoint.y = i;
-                    break;
-                }
-            }
             
-            CGFloat height = ABS(upPoint.y - downPoint.y);
+            upPoint = [self getPointSameColorWithPoint:locationInView isStart:YES isHorizontal:NO];
+            downPoint = [self getPointSameColorWithPoint:locationInView isStart:NO isHorizontal:NO];
+            
+//            upPoint = NSMakePoint(0, locationInView.y);
+//            downPoint = NSMakePoint(0, locationInView.y);
+//            for (int i = locationInView.y; i >= 0; i--) {
+//                if (![self isSameColor:pixelColor inPoint:NSMakePoint(locationInView.x, i)]) {
+//                    upPoint.y = i;
+//                    break;
+//                }
+//            }
+//            for (int i = locationInView.y; i <= self.frame.size.height; i++) {
+//                if (![self isSameColor:pixelColor inPoint:NSMakePoint(locationInView.x, i)]) {
+//                    downPoint.y = i;
+//                    break;
+//                }
+//            }
+            
+            CGFloat height = ABS(upPoint.y - downPoint.y) + 1;
             NSRect lineFrame = NSMakeRect(locationInView.x, upPoint.y, 10, height);
             _autoLine.frame = lineFrame;
             
@@ -260,42 +291,204 @@
 
 #pragma mark - Color
 
-- (NSColor*) examinePixelColor:(NSEvent *) theEvent
+//- (NSColor*) examinePixelColor:(NSEvent *) theEvent
+//{
+//    NSPoint where;
+//    NSColor *pixelColor;
+//    CGFloat  red, green, blue;
+//    where = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+//    // NSReadPixel pulls data out of the current focused graphics context,
+//    // so you must first call lockFocus.
+//    [self lockFocus];
+//    pixelColor = NSReadPixel(where);
+//    // Always balance lockFocus with unlockFocus.
+//    [self unlockFocus];
+//    red = [pixelColor redComponent];
+//    green = [pixelColor greenComponent];
+//    blue = [pixelColor blueComponent];
+//    // Your code to do something with the color values
+//    
+//    return pixelColor;
+//}
+//
+//- (BOOL)isSameColor:(NSColor*)color inPoint:(NSPoint)pt
+//{
+//    NSColor *pixelColor;
+//    //    CGFloat  red, green, blue;
+//    [self lockFocus];
+//    pixelColor = NSReadPixel(pt);
+//    // Always balance lockFocus with unlockFocus.
+//    [self unlockFocus];
+//    //    red = [pixelColor redComponent];
+//    //    green = [pixelColor greenComponent];
+//    //    blue = [pixelColor blueComponent];
+//    
+//    if ([pixelColor isEqual:color]) {
+//        return YES;
+//    }
+//    return NO;
+//}
+
+#pragma mark Quartz
+
+- (void)drawImageToRGBContext:(NSImage*)image
 {
-    NSPoint where;
-    NSColor *pixelColor;
-    CGFloat  red, green, blue;
-    where = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-    // NSReadPixel pulls data out of the current focused graphics context,
-    // so you must first call lockFocus.
-    [self lockFocus];
-    pixelColor = NSReadPixel(where);
-    // Always balance lockFocus with unlockFocus.
-    [self unlockFocus];
-    red = [pixelColor redComponent];
-    green = [pixelColor greenComponent];
-    blue = [pixelColor blueComponent];
-    // Your code to do something with the color values
+    CGImageRef imageRef = [image CGImageForProposedRect:nil context:NULL hints:nil];
     
-    return pixelColor;
+//    NSUInteger width = CGImageGetWidth(imageRef);
+//    NSUInteger height = CGImageGetHeight(imageRef);
+    NSUInteger width = image.size.width;
+    NSUInteger height = image.size.height;
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    _rawData = (unsigned char*) calloc(height * width * 4, sizeof(unsigned char));
+    NSUInteger bytesPerPixel = 4;
+    NSUInteger bytesPerRow = bytesPerPixel * width;
+    NSUInteger bitsPerComponent = 8;
+    CGContextRef context = CGBitmapContextCreate(_rawData, width, height,
+                                                 bitsPerComponent, bytesPerRow, colorSpace,
+                                                 kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+    CGColorSpaceRelease(colorSpace);
+    
+    CGContextDrawImage(context, CGRectMake(0, 0, width, height), imageRef);
+    CGContextRelease(context);
 }
 
-- (BOOL)isSameColor:(NSColor*)color inPoint:(NSPoint)pt
+- (NSPoint)getPointSameColorWithPoint:(NSPoint)point isStart:(BOOL)isStart isHorizontal:(BOOL)isHorizontal
 {
-    NSColor *pixelColor;
-    //    CGFloat  red, green, blue;
-    [self lockFocus];
-    pixelColor = NSReadPixel(pt);
-    // Always balance lockFocus with unlockFocus.
-    [self unlockFocus];
-    //    red = [pixelColor redComponent];
-    //    green = [pixelColor greenComponent];
-    //    blue = [pixelColor blueComponent];
+    NSUInteger bytesPerPixel = 4;
+    NSUInteger bytesPerRow = bytesPerPixel * self.image.size.width;
     
-    if ([pixelColor isEqual:color]) {
-        return YES;
+    NSUInteger byteIndex = (bytesPerRow * (self.image.size.height - (int)point.y)) + (int)point.x * bytesPerPixel;
+    
+    NSInteger threshold = 20;
+    
+    NSInteger red = _rawData[byteIndex];
+    NSInteger green = _rawData[byteIndex + 1];
+    NSInteger blue = _rawData[byteIndex + 2];
+    
+    NSPoint retPoint;
+    if (isHorizontal && isStart) {
+        retPoint.y = point.y;
+        NSUInteger left = 0;
+        for (int i = point.x - 1; i >= 0; i--) {
+            NSInteger curRed = _rawData[byteIndex];
+            NSInteger curGreen = _rawData[byteIndex + 1];
+            NSInteger curBlue = _rawData[byteIndex + 2];
+            
+            if (ABS(curRed - red) > threshold ||
+                ABS(curGreen - green) > threshold ||
+                ABS(curBlue - blue) > threshold) {
+                left = i + 1;
+                break;
+            }
+            
+            byteIndex -= bytesPerPixel;
+        }
+        retPoint.x = left;
+    } else if (isHorizontal && !isStart) {
+        retPoint.y = point.y;
+        NSUInteger right = self.image.size.width - 1;
+        for (int i = point.x; i < self.image.size.width - 1; i++) {
+            NSInteger curRed = _rawData[byteIndex];
+            NSInteger curGreen = _rawData[byteIndex + 1];
+            NSInteger curBlue = _rawData[byteIndex + 2];
+            
+            if (ABS(curRed - red) > threshold ||
+                ABS(curGreen - green) > threshold ||
+                ABS(curBlue - blue) > threshold) {
+                right = i - 1;
+                break;
+            }
+            
+            byteIndex += bytesPerPixel;
+        }
+        retPoint.x = right;
+    } else if (!isHorizontal && isStart) {
+        retPoint.x = point.x;
+        NSUInteger up = 0;
+        for (int i = point.y; i >= 0; i--) {
+            NSInteger curRed = _rawData[byteIndex];
+            NSInteger curGreen = _rawData[byteIndex + 1];
+            NSInteger curBlue = _rawData[byteIndex + 2];
+            
+            if (ABS(curRed - red) > threshold ||
+                ABS(curGreen - green) > threshold ||
+                ABS(curBlue - blue) > threshold) {
+                up = i + 1;
+                break;
+            }
+            
+            byteIndex -= bytesPerPixel;
+        }
+        retPoint.y = up;
+    } else if (!isHorizontal && !isStart) {
+        retPoint.x = point.x;
+        NSUInteger down = self.image.size.height - 1;
+        for (int i = point.y; i < self.image.size.height - 1; i++) {
+            NSInteger curRed = _rawData[byteIndex];
+            NSInteger curGreen = _rawData[byteIndex + 1];
+            NSInteger curBlue = _rawData[byteIndex + 2];
+            
+            if (ABS(curRed - red) > threshold ||
+                ABS(curGreen - green) > threshold ||
+                ABS(curBlue - blue) > threshold) {
+                down = i - 1;
+                break;
+            }
+            
+            byteIndex += bytesPerPixel;
+        }
+        retPoint.x = down;
     }
-    return NO;
+    
+    return retPoint;
 }
+
++ (unsigned char*)getRGBAsFromImage:(NSImage*)image atX:(int)x andY:(int)y count:(int)count
+{
+//    NSMutableArray *result = [NSMutableArray arrayWithCapacity:count];
+    
+    // First get the image into your data buffer
+    NSRect imageRect = NSMakeRect(0, 0, image.size.width, image.size.height);
+    
+    CGImageRef imageRef = [image CGImageForProposedRect:&imageRect context:NULL hints:nil];
+//    CGImageRef imageRef = [image CGImage];
+    NSUInteger width = CGImageGetWidth(imageRef);
+    NSUInteger height = CGImageGetHeight(imageRef);
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    unsigned char *rawData = (unsigned char*) calloc(height * width * 4, sizeof(unsigned char));
+    NSUInteger bytesPerPixel = 4;
+    NSUInteger bytesPerRow = bytesPerPixel * width;
+    NSUInteger bitsPerComponent = 8;
+    CGContextRef context = CGBitmapContextCreate(rawData, width, height,
+                                                 bitsPerComponent, bytesPerRow, colorSpace,
+                                                 kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+    CGColorSpaceRelease(colorSpace);
+    
+    CGContextDrawImage(context, CGRectMake(0, 0, width, height), imageRef);
+    CGContextRelease(context);
+    
+    // Now your rawData contains the image data in the RGBA8888 pixel format.
+    NSUInteger byteIndex = (bytesPerRow * y) + x * bytesPerPixel;
+    for (int i = 0 ; i < count ; ++i)
+    {
+//        CGFloat red   = (rawData[byteIndex]     * 1.0) / 255.0;
+//        CGFloat green = (rawData[byteIndex + 1] * 1.0) / 255.0;
+//        CGFloat blue  = (rawData[byteIndex + 2] * 1.0) / 255.0;
+//        CGFloat alpha = (rawData[byteIndex + 3] * 1.0) / 255.0;
+        byteIndex += bytesPerPixel;
+        NSLog(@"red %d, green %d, blue %d", rawData[byteIndex], rawData[byteIndex+1], rawData[byteIndex+2]);
+        
+//        UIColor *acolor = [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
+//        [result addObject:acolor];
+    }
+    
+    return rawData;
+//    free(rawData);
+    
+//    return result;
+}
+
+
 
 @end

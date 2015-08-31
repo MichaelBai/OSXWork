@@ -38,12 +38,12 @@
     
 //    [[NSColor whiteColor] setFill];
 //    NSRectFill(dirtyRect);
-    NSLog(@"draw rect %@", NSStringFromRect(dirtyRect));
+//    NSLog(@"draw rect %@", NSStringFromRect(dirtyRect));
     // Drawing code here.
 //    _line.viewFrame = self.frame;
     _line = [[MBGoDesignLine alloc] initWithFrame:self.frame lineAxis:self.lineAxis];
     [_line draw];
-    NSLog(@"draw rect END");
+//    NSLog(@"draw rect END");
 }
 
 @end
