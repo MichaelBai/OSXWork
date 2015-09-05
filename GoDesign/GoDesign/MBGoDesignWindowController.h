@@ -14,5 +14,6 @@
 @property (weak) IBOutlet MBGoDesignScrollView *scrollView;
 @property (weak) IBOutlet NSMatrix *mode;
 @property (weak) IBOutlet NSMatrix *axis;
+@property (weak) IBOutlet NSButton *openFileBtn;
 
 @end

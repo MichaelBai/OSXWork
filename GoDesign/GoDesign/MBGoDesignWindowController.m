@@ -51,5 +51,38 @@
     }
 }
 
+- (IBAction)openFile:(NSButton *)sender {
+    // Create a File Open Dialog class.
+    NSOpenPanel* openDlg = [NSOpenPanel openPanel];
+    
+    // Set array of file types
+    NSArray *fileTypesArray;
+    fileTypesArray = [NSArray arrayWithObjects:@"jpg", @"gif", @"png", nil];
+    
+    // Enable options in the dialog.
+    [openDlg setCanChooseFiles:YES];
+    [openDlg setAllowedFileTypes:fileTypesArray];
+    [openDlg setAllowsMultipleSelection:NO];
+    
+    // Display the dialog box.  If the OK pressed,
+    // process the files.
+    if ( [openDlg runModal] == NSOKButton ) {
+        
+        // Gets list of all files selected
+        NSArray *files = [openDlg URLs];
+        
+//        // Loop through the files and process them.
+//        for(int i = 0; i < [files count]; i++ ) {
+//            // Do something with the filename.
+//            NSLog(@"File path: %@", [[files objectAtIndex:i] path]);
+//        }
+        
+        if (files.count > 0) {
+            // only one file here
+            NSImage* image = [[NSImage alloc] initWithContentsOfURL:files[0]];
+            [self.scrollView selectImage:image];
+        }
+    }
+}
 
 @end

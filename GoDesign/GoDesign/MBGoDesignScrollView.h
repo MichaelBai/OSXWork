@@ -13,4 +13,6 @@
 
 @property (strong, nonatomic) MBGoDesignImageView *imgView;
 
+- (void)selectImage:(NSImage*)image;
+
 @end

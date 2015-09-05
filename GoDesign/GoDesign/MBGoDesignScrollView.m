@@ -65,6 +65,28 @@
     return _imgView;
 }
 
+- (void)selectImage:(NSImage*)image
+{
+    [self.imgView setImage:image];
+    
+    // TODO: get scrren width, make width less than 2/3 screen width
+    // resize window to contain the image
+    NSRect imageViewFrame = NSMakeRect(0, 0, image.size.width, image.size.height);
+    CGFloat screenWidth = 1000;
+    CGFloat windowWidth = self.window.frame.size.width;
+    while (imageViewFrame.size.width > screenWidth) {
+        imageViewFrame.size.width /= 2;
+        imageViewFrame.size.height /= 2;
+    }
+    imageViewFrame.origin.x = (windowWidth - imageViewFrame.size.width)/2;
+    [self.imgView setImageFrameStyle:NSImageFrameNone];
+    [self.imgView setFrame:imageViewFrame];
+    
+    // TODO: need to set frame width to minus scroll bar width and height to minus scroll bar height
+    NSRect containerFrame = NSMakeRect(0, 0, MAX(imageViewFrame.size.width, self.bounds.size.width), MAX(imageViewFrame.size.height, self.bounds.size.height));
+    [self.containerView setFrame:containerFrame];
+}
+
 #pragma mark - Destination Operations
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender
@@ -125,24 +147,7 @@
         //set the image using the best representation we can get from the pasteboard
         if([NSImage canInitWithPasteboard: [sender draggingPasteboard]]) {
             NSImage *newImage = [[NSImage alloc] initWithPasteboard:[sender draggingPasteboard]];
-            [self.imgView setImage:newImage];
-            
-            // TODO: get scrren width, make width less than 2/3 screen width
-            // resize window to contain the image
-            NSRect imageViewFrame = NSMakeRect(0, 0, newImage.size.width, newImage.size.height);
-            CGFloat screenWidth = 1000;
-            CGFloat windowWidth = self.window.frame.size.width;
-            while (imageViewFrame.size.width > screenWidth) {
-                imageViewFrame.size.width /= 2;
-                imageViewFrame.size.height /= 2;
-            }
-            imageViewFrame.origin.x = (windowWidth - imageViewFrame.size.width)/2;
-            [self.imgView setImageFrameStyle:NSImageFrameNone];
-            [self.imgView setFrame:imageViewFrame];
-            
-            // TODO: need to set frame width to minus scroll bar width and height to minus scroll bar height
-            NSRect containerFrame = NSMakeRect(0, 0, MAX(imageViewFrame.size.width, self.bounds.size.width), MAX(imageViewFrame.size.height, self.bounds.size.height));
-            [self.containerView setFrame:containerFrame];
+            [self selectImage:newImage];
         }
         
         //if the drag comes from a file, set the window title to the filename
