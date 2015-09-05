@@ -30,17 +30,21 @@
 
 - (void)draw {
     // Set the color and line width for the drawing context then draw NSBezierPath instance.
-    
     [self.color set];
-    [_path moveToPoint:NSMakePoint(_thickness/2, 0)];
     if (_lineAxis == LineHorizontal) {
+        [_path moveToPoint:NSMakePoint(_thickness/2, 0)];
         [_path lineToPoint:NSMakePoint(_thickness/2, 10)];
         [_path moveToPoint:NSMakePoint(_thickness/2, 5)];
         [_path lineToPoint:NSMakePoint(_viewFrame.size.width-_thickness/2, 5)];
         [_path moveToPoint:NSMakePoint(_viewFrame.size.width-_thickness/2, 0)];
         [_path lineToPoint:NSMakePoint(_viewFrame.size.width-_thickness/2, 10)];
     } else {
-        [_path lineToPoint:NSMakePoint(0, _viewFrame.size.height)];
+        [_path moveToPoint:NSMakePoint(0, _thickness/2)];
+        [_path lineToPoint:NSMakePoint(10, _thickness/2)];
+        [_path moveToPoint:NSMakePoint(5, _thickness/2)];
+        [_path lineToPoint:NSMakePoint(5, _viewFrame.size.height-_thickness/2)];
+        [_path moveToPoint:NSMakePoint(0, _viewFrame.size.height-_thickness/2)];
+        [_path lineToPoint:NSMakePoint(10, _viewFrame.size.height-_thickness/2)];
     }
     [self.path setLineWidth:self.thickness];
     [self.path stroke];
