@@ -10,6 +10,7 @@
 
 @interface MBGoDesignImageView : NSImageView
 
+@property OperationMode opMode;
 @property LineAxis lineAxis;
 @property LineMode lineMode;
 

@@ -9,19 +9,21 @@
 #import "MBGoDesignImageView.h"
 #import "MBGoDesignLineView.h"
 #import "MBGoDesignLineLengthView.h"
+#import "MBGoDesignColorView.h"
 
 @interface MBGoDesignImageView () 
 
 @property NSMutableArray* measuringlines;
 @property NSMutableArray* lineLengths;
+@property NSMutableArray* colorViews;
 
-@property NSBezierPath *path;
 @property NSPoint startPoint;
 @property NSPoint endPoint;
 
 @property NSTrackingArea* trackingArea;
 
 @property MBGoDesignLineView* autoLine;
+@property MBGoDesignColorView* colorView;
 
 @property unsigned char* rawData;
 
@@ -38,6 +40,10 @@
         _startPoint = CGPointZero;
         
         _lineLengths = [NSMutableArray array];
+        
+        _colorViews = [NSMutableArray array];
+        
+        _opMode = OP_Measure;
     }
     return self;
 }
@@ -79,6 +85,8 @@
     [lastLineView setNeedsDisplay:YES];
     MBGoDesignLineLengthView* lastLineLengthView = _lineLengths.lastObject;
     [lastLineLengthView setNeedsDisplay:YES];
+    MBGoDesignColorView* lastColorView = _colorViews.lastObject;
+    [lastColorView setNeedsDisplay:YES];
 }
 
 #pragma mark - Mouse Event Methods
@@ -87,11 +95,15 @@
  Override NSResponder's mouse handling methods to respond to the events we want.
  */
 - (void)mouseDown:(NSEvent *)event {
+    if (_opMode == OP_Color) {
+        _colorView = nil;
+        [self setNeedsDisplay:YES];
+        return;
+    }
+    
     if (_lineMode == ModeAuto) {
-        if (_autoLine) {
-            _autoLine = nil;
-            [self setNeedsDisplay:YES];
-        }
+        _autoLine = nil;
+        [self setNeedsDisplay:YES];
         return;
     }
     
@@ -141,6 +153,19 @@
 {
     NSPoint locationInView = [self convertPoint:theEvent.locationInWindow fromView:nil];
     locationInView = NSMakePoint((int)locationInView.x, (int)locationInView.y);
+    
+    if (_opMode == OP_Color) {
+        if (!_colorView) {
+            _colorView = [[MBGoDesignColorView alloc] init];
+            [_colorViews addObject:_colorView];
+            [self addSubview:_colorView];
+        }
+        _colorView.colorStr = [self getColorStringInPoint:locationInView];
+        _colorView.frame = NSMakeRect(locationInView.x, locationInView.y, 50, 20);
+        
+        [self setNeedsDisplay:YES];
+        return;
+    }
     
     if (_lineMode == ModeAuto) {
         if (!_autoLine) {
@@ -243,6 +268,23 @@
 }
 
 #pragma mark - Color
+
+- (NSString*)getColorStringInPoint:(NSPoint)point
+{
+    if (_rawData == NULL) {
+        return @"";
+    }
+    
+    NSUInteger bytesPerPixel = 4;
+    NSUInteger bytesPerRow = bytesPerPixel * self.image.size.width;
+    
+    NSUInteger byteIndex = (bytesPerRow * (self.image.size.height - point.y)) + (int)point.x * bytesPerPixel;
+    
+    NSInteger red = _rawData[byteIndex];
+    NSInteger green = _rawData[byteIndex + 1];
+    NSInteger blue = _rawData[byteIndex + 2];
+    return [NSString stringWithFormat:@"#%02lx%02lx%02lx", red, green, blue];
+}
 
 //- (NSColor*) examinePixelColor:(NSEvent *) theEvent
 //{

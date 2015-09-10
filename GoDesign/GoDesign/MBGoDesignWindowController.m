@@ -85,4 +85,12 @@
     }
 }
 
+- (IBAction)toggleColor:(NSButton *)sender {
+    if (sender.state == 0) {
+        _scrollView.imgView.opMode = OP_Measure;
+    } else {
+        _scrollView.imgView.opMode = OP_Color;
+    }
+}
+
 @end

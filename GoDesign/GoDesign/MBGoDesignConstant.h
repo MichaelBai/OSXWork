@@ -9,6 +9,11 @@
 #import <Foundation/Foundation.h>
 
 typedef enum : NSUInteger {
+    OP_Measure,
+    OP_Color
+} OperationMode;
+
+typedef enum : NSUInteger {
     LineHorizontal,
     LineVertical
 } LineAxis;
