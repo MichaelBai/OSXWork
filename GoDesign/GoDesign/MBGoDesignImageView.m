@@ -49,11 +49,6 @@
     }
 }
 
-- (void)awakeFromNib
-{
-    
-}
-
 - (void)setImage:(NSImage *)newImage
 {
     [super setImage:newImage];
@@ -61,8 +56,7 @@
         free(_rawData);
         _rawData = NULL;
     }
-//    _rawData = [MBGoDesignImageView getRGBAsFromImage:self.image atX:0 andY:87 count:100];
-    [self drawImageToRGBContext:self.image];
+    [self drawImageToRGBContext:self.image]; // alloc memory and set address to _rawData
 }
 
 - (void)setFrame:(NSRect)frameRect
@@ -74,19 +68,15 @@
     [self addTrackingArea:_trackingArea];
 }
 
+#pragma mark - Draw
+
 - (void)drawRect:(NSRect)dirtyRect
 {
-    /*------------------------------------------------------
-     draw method is overridden to do drop highlighing
-     --------------------------------------------------------*/
     //do the usual draw operation to display the image
     [super drawRect:dirtyRect];
     
     MBGoDesignLineView* lastLineView = _measuringlines.lastObject;
     [lastLineView setNeedsDisplay:YES];
-//    [_measuringlines enumerateObjectsUsingBlock:^(MBGoDesignLineView* lineView, NSUInteger idx, BOOL *stop) {
-//        [lineView setNeedsDisplay:YES];
-//    }];
     MBGoDesignLineLengthView* lastLineLengthView = _lineLengths.lastObject;
     [lastLineLengthView setNeedsDisplay:YES];
 }
@@ -96,17 +86,10 @@
 /*
  Override NSResponder's mouse handling methods to respond to the events we want.
  */
-
-// Start drawing a new squiggle on mouse down.
 - (void)mouseDown:(NSEvent *)event {
-    // TODO: add length of auto line, add vertical auto line
     if (_lineMode == ModeAuto) {
         if (_autoLine) {
-            MBGoDesignLineView* curAutoLine = [[MBGoDesignLineView alloc] initWithFrame:_autoLine.frame lineAxis:_autoLine.lineAxis];
-            [_measuringlines removeLastObject];
             _autoLine = nil;
-            [_measuringlines addObject:curAutoLine];
-            
             [self setNeedsDisplay:YES];
         }
         return;
@@ -251,6 +234,10 @@
             [_measuringlines removeLastObject];
             [_autoLine removeFromSuperview];
             _autoLine = nil;
+            
+            MBGoDesignLineLengthView* curLineLengthView = _lineLengths.lastObject;
+            [curLineLengthView removeFromSuperview];
+            [_lineLengths removeLastObject];
         }
     }
 }
