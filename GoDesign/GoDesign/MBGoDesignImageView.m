@@ -254,6 +254,12 @@
 
 - (void)mouseExited:(NSEvent *)theEvent
 {
+    if (_opMode == OP_Color) {
+        [_colorViews removeLastObject];
+        [_colorView removeFromSuperview];
+        _colorView = nil;
+        return;
+    }
     if (_lineMode == ModeAuto) {
         if (_autoLine) {
             [_measuringlines removeLastObject];
