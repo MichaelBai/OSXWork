@@ -11,6 +11,8 @@
 #import "MBGoDesignLineLengthView.h"
 #import "MBGoDesignColorView.h"
 
+#define LINEVIEW_WIDTH 10
+
 @interface MBGoDesignImageView () 
 
 @property NSMutableArray* measuringlines;
@@ -111,7 +113,7 @@
     NSPoint locationInView = [self convertPoint:event.locationInWindow fromView:nil];
     if (CGPointEqualToPoint(_startPoint, CGPointZero)) {
         _startPoint = locationInView;
-        NSRect lineViewFrame = NSMakeRect(_startPoint.x, _startPoint.y, 0, 0);
+        NSRect lineViewFrame = NSMakeRect(_startPoint.x, _startPoint.y-LINEVIEW_WIDTH/2, 0, 0);
         MBGoDesignLineView* lineView = [[MBGoDesignLineView alloc] initWithFrame:lineViewFrame lineAxis:_lineAxis];
         
         [_measuringlines addObject:lineView];
@@ -128,25 +130,12 @@
         MBGoDesignLineLengthView* curLineLengthView = _lineLengths.lastObject;
         NSRect lineLengthFrame = curLineLengthView.frame;
         MBGoDesignLineView* curLineView = _measuringlines.lastObject;
-        // TODO: need adjust by line direction, here is lineright
+        // TODO: need adjust to line middle
         lineLengthFrame.origin = NSMakePoint(curLineView.frame.origin.x + curLineView.frame.size.width + 3, curLineView.frame.origin.y);
         curLineLengthView.frame = lineLengthFrame;
     }
     
     [self setNeedsDisplay:YES];
-}
-
-// Draw to end point on existing squiggle on mouse drag.
-- (void)mouseDragged:(NSEvent *)event {
-    
-	// Convert from the window's coordinate system to this view's coordinates.
-//    NSPoint locationInView = [self convertPoint:event.locationInWindow fromView:nil];
-//    MBGoDesignLineView* curLineView = _measuringlines.lastObject;
-//    CGRect lineViewFrame = curLineView.frame;
-//    lineViewFrame.size.width = ABS(locationInView.x - lineViewFrame.origin.x);
-//    curLineView.frame = lineViewFrame;
-//    
-//    [self setNeedsDisplay:YES];
 }
 
 - (void)mouseMoved:(NSEvent *)theEvent
@@ -190,7 +179,7 @@
             rightPoint = [self getPointSameColorWithPoint:locationInView isStart:NO isHorizontal:YES];
             
             CGFloat width = ABS(leftPoint.x - rightPoint.x) + 1;
-            NSRect lineFrame = NSMakeRect(leftPoint.x, locationInView.y, width, 10);
+            NSRect lineFrame = NSMakeRect(leftPoint.x, locationInView.y-LINEVIEW_WIDTH/2, width, LINEVIEW_WIDTH);
             _autoLine.frame = lineFrame;
             
             curLineLengthView.frame = NSMakeRect(locationInView.x + 3, locationInView.y, 30, 20);
@@ -202,7 +191,7 @@
             downPoint = [self getPointSameColorWithPoint:locationInView isStart:NO isHorizontal:NO];
             
             CGFloat height = ABS(upPoint.y - downPoint.y) + 1;
-            NSRect lineFrame = NSMakeRect(downPoint.x, self.image.size.height - downPoint.y - 1, 10, height);
+            NSRect lineFrame = NSMakeRect(downPoint.x-LINEVIEW_WIDTH/2, self.image.size.height - downPoint.y - 1, LINEVIEW_WIDTH, height);
             _autoLine.frame = lineFrame;
             
             curLineLengthView.frame = NSMakeRect(locationInView.x + 3, locationInView.y, 30, 20);
@@ -213,6 +202,8 @@
         
         return;
     }
+    
+    // Manual
     if (!CGPointEqualToPoint(_startPoint, CGPointZero)) {
         MBGoDesignLineView* curLineView = _measuringlines.lastObject;
         MBGoDesignLineLengthView* curLineLengthView = _lineLengths.lastObject;
@@ -221,7 +212,7 @@
         if (curLineView.lineAxis == LineHorizontal) {
             CGFloat width = ABS(locationInView.x - _startPoint.x);
             CGRect lineViewFrame = curLineView.frame;
-            lineViewFrame.size.height = 10;
+            lineViewFrame.size.height = LINEVIEW_WIDTH;
             lineViewFrame.size.width = width;
             if (locationInView.x > _startPoint.x) {
                 lineViewFrame.origin.x = _startPoint.x;
@@ -235,7 +226,7 @@
         } else { // Vertical
             CGFloat height = ABS(locationInView.y - _startPoint.y);
             CGRect lineViewFrame = curLineView.frame;
-            lineViewFrame.size.width = 10;
+            lineViewFrame.size.width = LINEVIEW_WIDTH;
             lineViewFrame.size.height = height;
             if (locationInView.y > _startPoint.y) {
                 lineViewFrame.origin.y = _startPoint.y;
@@ -291,44 +282,6 @@
     NSInteger blue = _rawData[byteIndex + 2];
     return [NSString stringWithFormat:@"#%02lx%02lx%02lx", red, green, blue];
 }
-
-//- (NSColor*) examinePixelColor:(NSEvent *) theEvent
-//{
-//    NSPoint where;
-//    NSColor *pixelColor;
-//    CGFloat  red, green, blue;
-//    where = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-//    // NSReadPixel pulls data out of the current focused graphics context,
-//    // so you must first call lockFocus.
-//    [self lockFocus];
-//    pixelColor = NSReadPixel(where);
-//    // Always balance lockFocus with unlockFocus.
-//    [self unlockFocus];
-//    red = [pixelColor redComponent];
-//    green = [pixelColor greenComponent];
-//    blue = [pixelColor blueComponent];
-//    // Your code to do something with the color values
-//    
-//    return pixelColor;
-//}
-//
-//- (BOOL)isSameColor:(NSColor*)color inPoint:(NSPoint)pt
-//{
-//    NSColor *pixelColor;
-//    //    CGFloat  red, green, blue;
-//    [self lockFocus];
-//    pixelColor = NSReadPixel(pt);
-//    // Always balance lockFocus with unlockFocus.
-//    [self unlockFocus];
-//    //    red = [pixelColor redComponent];
-//    //    green = [pixelColor greenComponent];
-//    //    blue = [pixelColor blueComponent];
-//    
-//    if ([pixelColor isEqual:color]) {
-//        return YES;
-//    }
-//    return NO;
-//}
 
 #pragma mark - Image Pixel Exec
 

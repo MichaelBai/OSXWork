@@ -26,12 +26,6 @@
     return self;
 }
 
-//- (void)setFrame:(NSRect)frameRect
-//{
-//    [super setFrame:frameRect];
-//    _line.viewFrame = frameRect;
-//}
-
 - (void)drawRect:(NSRect)dirtyRect
 {
     [super drawRect:dirtyRect];

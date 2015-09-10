@@ -33,18 +33,18 @@
     [self.color set];
     if (_lineAxis == LineHorizontal) {
         [_path moveToPoint:NSMakePoint(_thickness/2, 0)];
-        [_path lineToPoint:NSMakePoint(_thickness/2, 10)];
-        [_path moveToPoint:NSMakePoint(_thickness/2, 5)];
-        [_path lineToPoint:NSMakePoint(_viewFrame.size.width-_thickness/2, 5)];
+        [_path lineToPoint:NSMakePoint(_thickness/2, _viewFrame.size.height)];
+        [_path moveToPoint:NSMakePoint(_thickness/2, _viewFrame.size.height/2)];
+        [_path lineToPoint:NSMakePoint(_viewFrame.size.width-_thickness/2, _viewFrame.size.height/2)];
         [_path moveToPoint:NSMakePoint(_viewFrame.size.width-_thickness/2, 0)];
-        [_path lineToPoint:NSMakePoint(_viewFrame.size.width-_thickness/2, 10)];
+        [_path lineToPoint:NSMakePoint(_viewFrame.size.width-_thickness/2, _viewFrame.size.height)];
     } else {
         [_path moveToPoint:NSMakePoint(0, _thickness/2)];
-        [_path lineToPoint:NSMakePoint(10, _thickness/2)];
-        [_path moveToPoint:NSMakePoint(5, _thickness/2)];
-        [_path lineToPoint:NSMakePoint(5, _viewFrame.size.height-_thickness/2)];
+        [_path lineToPoint:NSMakePoint(_viewFrame.size.width, _thickness/2)];
+        [_path moveToPoint:NSMakePoint(_viewFrame.size.width/2, _thickness/2)];
+        [_path lineToPoint:NSMakePoint(_viewFrame.size.width/2, _viewFrame.size.height-_thickness/2)];
         [_path moveToPoint:NSMakePoint(0, _viewFrame.size.height-_thickness/2)];
-        [_path lineToPoint:NSMakePoint(10, _viewFrame.size.height-_thickness/2)];
+        [_path lineToPoint:NSMakePoint(_viewFrame.size.width, _viewFrame.size.height-_thickness/2)];
     }
     [self.path setLineWidth:self.thickness];
     [self.path stroke];
