@@ -8,7 +8,7 @@
 
 #import "MBGoDesignScrollView.h"
 
-@interface MBGoDesignScrollView () <NSDraggingDestination>
+@interface MBGoDesignScrollView () <NSDraggingDestination, NSWindowDelegate>
 {
     BOOL highlight;
 }
@@ -33,6 +33,8 @@
     [self registerForDraggedTypes:[NSArray arrayWithObjects:NSFilenamesPboardType, nil]];
     [self setDocumentView:self.containerView];
     [self.containerView addSubview:self.imgView];
+    
+    self.window.delegate = self;
 }
 
 - (void)drawRect:(NSRect)dirtyRect
@@ -68,23 +70,30 @@
 - (void)selectImage:(NSImage*)image
 {
     [self.imgView setImage:image];
+    [self.imgView setImageFrameStyle:NSImageFrameNone];
     
+    [self resetViewFrames];
+}
+
+- (void)resetViewFrames
+{
     // TODO: get scrren width, make width less than 2/3 screen width
     // resize window to contain the image
+    NSImage* image = self.imgView.image;
     NSRect imageViewFrame = NSMakeRect(0, 0, image.size.width, image.size.height);
-    CGFloat screenWidth = 1000;
-    CGFloat windowWidth = self.window.frame.size.width;
-    while (imageViewFrame.size.width > screenWidth) {
-        imageViewFrame.size.width /= 2;
-        imageViewFrame.size.height /= 2;
-    }
-    imageViewFrame.origin.x = (windowWidth - imageViewFrame.size.width)/2;
-    [self.imgView setImageFrameStyle:NSImageFrameNone];
-    [self.imgView setFrame:imageViewFrame];
+    //    CGFloat screenWidth = 1000;
+    //    CGFloat windowWidth = self.window.frame.size.width;
+    //    while (imageViewFrame.size.width > screenWidth) {
+    //        imageViewFrame.size.width /= 2;
+    //        imageViewFrame.size.height /= 2;
+    //    }
+    NSSize estimatedSize = [NSScrollView contentSizeForFrameSize:self.bounds.size horizontalScrollerClass:[NSScroller class] verticalScrollerClass:[NSScroller class] borderType:NSNoBorder controlSize:NSRegularControlSize scrollerStyle:NSScrollerStyleLegacy];
     
-    // TODO: need to set frame width to minus scroll bar width and height to minus scroll bar height
-    NSRect containerFrame = NSMakeRect(0, 0, MAX(imageViewFrame.size.width, self.bounds.size.width), MAX(imageViewFrame.size.height, self.bounds.size.height));
+    NSRect containerFrame = NSMakeRect(0, 0, MAX(imageViewFrame.size.width, estimatedSize.width)-2, MAX(imageViewFrame.size.height, estimatedSize.height)); // here still has 2px that leads to show the NSScroller bar
     [self.containerView setFrame:containerFrame];
+    
+    imageViewFrame.origin.x = (containerFrame.size.width - imageViewFrame.size.width)/2;
+    [self.imgView setFrame:imageViewFrame];
 }
 
 #pragma mark - Destination Operations
@@ -156,6 +165,13 @@
     }
     
     return YES;
+}
+
+#pragma mark - NSWindowDelegate
+
+- (void)windowDidResize:(NSNotification *)notification
+{
+    [self resetViewFrames];
 }
 
 @end

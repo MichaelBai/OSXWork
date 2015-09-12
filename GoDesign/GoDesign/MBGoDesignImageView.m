@@ -142,6 +142,10 @@
 {
     NSPoint locationInView = [self convertPoint:theEvent.locationInWindow fromView:nil];
     locationInView = NSMakePoint((int)locationInView.x, (int)locationInView.y);
+    // When moves fast, location may out of image view, disgard it here
+    if (!NSPointInRect(locationInView, self.bounds)) {
+        return;
+    }
     
     if (_opMode == OP_Color) {
         if (!_colorView) {
@@ -314,7 +318,7 @@
     
     NSUInteger byteIndex = (bytesPerRow * (self.image.size.height - point.y)) + (int)point.x * bytesPerPixel;
     
-    NSInteger threshold = 20;
+    NSInteger threshold = 5;
     
     NSInteger red = _rawData[byteIndex];
     NSInteger green = _rawData[byteIndex + 1];
