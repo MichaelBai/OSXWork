@@ -8,21 +8,33 @@
 
 #import "MBGoDesignColorView.h"
 
+@interface MBGoDesignColorView ()
+
+@property NSTextField* colorField;
+
+@end
+
 @implementation MBGoDesignColorView
 
 - (instancetype)initWithFrame:(NSRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
+        _colorField = [[NSTextField alloc] initWithFrame:self.bounds];
+        _colorField.alignment = NSCenterTextAlignment;
+        _colorField.editable = NO;
+        _colorField.bordered = NO;
+        _colorField.selectable = NO;
+        _colorField.backgroundColor = [NSColor clearColor];
+        [self addSubview:_colorField];
     }
     return self;
 }
 
-- (void)drawRect:(NSRect)dirtyRect
+- (void)setColorStr:(NSString *)colorStr
 {
-    [super drawRect:dirtyRect];
-    [_colorStr drawAtPoint:NSZeroPoint withAttributes:nil];
+    _colorStr = colorStr;
+    _colorField.stringValue = _colorStr;
 }
 
 @end

@@ -10,6 +10,6 @@
 
 @interface MBGoDesignColorView : NSView
 
-@property NSString* colorStr;
+@property (nonatomic) NSString* colorStr;
 
 @end

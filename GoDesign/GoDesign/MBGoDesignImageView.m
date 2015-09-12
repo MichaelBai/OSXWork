@@ -176,12 +176,12 @@
     
     if (_opMode == OP_Color) {
         if (!_colorView) {
-            _colorView = [[MBGoDesignColorView alloc] init];
+            _colorView = [[MBGoDesignColorView alloc] initWithFrame:NSMakeRect(locationInView.x, locationInView.y, 50, 20)];
             [_colorViews addObject:_colorView];
             [self addSubview:_colorView];
         }
-        _colorView.colorStr = [self getColorStringInPoint:locationInView];
         _colorView.frame = NSMakeRect(locationInView.x, locationInView.y, 50, 20);
+        _colorView.colorStr = [self getColorStringInPoint:locationInView];
         
         [self setNeedsDisplay:YES];
         return;
