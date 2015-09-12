@@ -12,6 +12,8 @@
 #import "MBGoDesignColorView.h"
 
 #define LINEVIEW_WIDTH 10
+#define LENGTH_WIDTH 40
+#define LENGTH_HEIGHT 20
 
 @interface MBGoDesignImageView () 
 
@@ -76,6 +78,24 @@
     [self addTrackingArea:_trackingArea];
 }
 
+- (void)resetLengthFrameToLineCenter
+{
+    // TODO: line length view should adjust size like sizeToFit in iOS, and now the length frame adjusting code is ugly, need to refact
+    
+    MBGoDesignLineView* lastLineView = _measuringlines.lastObject;
+    MBGoDesignLineLengthView* lastLineLengthView = _lineLengths.lastObject;
+    // set line length to the center of cur line
+    NSRect lastLineFrame = lastLineView.frame;
+//    NSRect oldLengthFrame = lastLineLengthView.frame;
+    NSRect newLengthFrame;
+    if (lastLineView.lineAxis == LineHorizontal) {
+        newLengthFrame = NSMakeRect(lastLineFrame.origin.x + lastLineFrame.size.width/2 - LENGTH_WIDTH/2, lastLineFrame.origin.y, LENGTH_WIDTH, LENGTH_HEIGHT);
+    } else {
+        newLengthFrame = NSMakeRect(lastLineFrame.origin.x, lastLineFrame.origin.y + lastLineFrame.size.height/2 - LENGTH_HEIGHT/2, LENGTH_WIDTH, LENGTH_HEIGHT);
+    }
+    lastLineLengthView.frame = newLengthFrame;
+}
+
 #pragma mark - Draw
 
 - (void)drawRect:(NSRect)dirtyRect
@@ -104,6 +124,8 @@
     }
     
     if (_lineMode == ModeAuto) {
+        [self resetLengthFrameToLineCenter];
+        
         _autoLine = nil;
         [self setNeedsDisplay:YES];
         return;
@@ -111,6 +133,8 @@
     
 	// Convert from the window's coordinate system to this view's coordinates.
     NSPoint locationInView = [self convertPoint:event.locationInWindow fromView:nil];
+    locationInView = NSMakePoint((int)locationInView.x, (int)locationInView.y);
+    
     if (CGPointEqualToPoint(_startPoint, CGPointZero)) {
         _startPoint = locationInView;
         NSRect lineViewFrame = NSMakeRect(_startPoint.x, _startPoint.y-LINEVIEW_WIDTH/2, 0, 0);
@@ -120,7 +144,7 @@
         [self addSubview:lineView];
         
         // add line length view
-        NSRect lineLengthFrame = NSMakeRect(locationInView.x, locationInView.y, 30, 20);
+        NSRect lineLengthFrame = NSMakeRect(locationInView.x, locationInView.y, LENGTH_WIDTH, LENGTH_HEIGHT);
         MBGoDesignLineLengthView* lineLengthView = [[MBGoDesignLineLengthView alloc] initWithFrame:lineLengthFrame];
         [_lineLengths addObject:lineLengthView];
         [self addSubview:lineLengthView];
@@ -131,9 +155,12 @@
         NSRect lineLengthFrame = curLineLengthView.frame;
         MBGoDesignLineView* curLineView = _measuringlines.lastObject;
         // TODO: need adjust to line middle
-        lineLengthFrame.origin = NSMakePoint(curLineView.frame.origin.x + curLineView.frame.size.width + 3, curLineView.frame.origin.y);
+        lineLengthFrame.origin = NSMakePoint(curLineView.frame.origin.x + curLineView.frame.size.width - 3, curLineView.frame.origin.y + 5);
         curLineLengthView.frame = lineLengthFrame;
+        
+        [self resetLengthFrameToLineCenter];
     }
+    
     
     [self setNeedsDisplay:YES];
 }
@@ -168,7 +195,7 @@
             [self addSubview:_autoLine];
             
             // TODO: duplicate here with code in MouseDown:
-            NSRect lineLengthFrame = NSMakeRect(locationInView.x, locationInView.y, 30, 20);
+            NSRect lineLengthFrame = NSMakeRect(locationInView.x, locationInView.y, LENGTH_WIDTH, LENGTH_HEIGHT);
             MBGoDesignLineLengthView* lineLengthView = [[MBGoDesignLineLengthView alloc] initWithFrame:lineLengthFrame];
             [_lineLengths addObject:lineLengthView];
             [self addSubview:lineLengthView];
@@ -186,7 +213,7 @@
             NSRect lineFrame = NSMakeRect(leftPoint.x, locationInView.y-LINEVIEW_WIDTH/2, width, LINEVIEW_WIDTH);
             _autoLine.frame = lineFrame;
             
-            curLineLengthView.frame = NSMakeRect(locationInView.x + 3, locationInView.y, 30, 20);
+            curLineLengthView.frame = NSMakeRect(locationInView.x + 3, locationInView.y, LENGTH_WIDTH, LENGTH_HEIGHT);
             curLineLengthView.lineLength = [NSString stringWithFormat:@"%.0f", width];
         } else {
             NSPoint upPoint, downPoint;
@@ -198,7 +225,7 @@
             NSRect lineFrame = NSMakeRect(downPoint.x-LINEVIEW_WIDTH/2, self.image.size.height - downPoint.y - 1, LINEVIEW_WIDTH, height);
             _autoLine.frame = lineFrame;
             
-            curLineLengthView.frame = NSMakeRect(locationInView.x + 3, locationInView.y, 30, 20);
+            curLineLengthView.frame = NSMakeRect(locationInView.x + 3, locationInView.y, LENGTH_WIDTH, LENGTH_HEIGHT);
             curLineLengthView.lineLength = [NSString stringWithFormat:@"%.0f", height];
         }
         
@@ -225,7 +252,7 @@
             }
             curLineView.frame = lineViewFrame;
             
-            curLineLengthView.frame = NSMakeRect(locationInView.x + 3, locationInView.y, 30, 20);
+            curLineLengthView.frame = NSMakeRect(locationInView.x + 3, locationInView.y, LENGTH_WIDTH, LENGTH_HEIGHT);
             curLineLengthView.lineLength = [NSString stringWithFormat:@"%.0f", width];
         } else { // Vertical
             CGFloat height = ABS(locationInView.y - _startPoint.y);
@@ -239,7 +266,7 @@
             }
             curLineView.frame = lineViewFrame;
             
-            curLineLengthView.frame = NSMakeRect(locationInView.x + 3, locationInView.y, 30, 20);
+            curLineLengthView.frame = NSMakeRect(locationInView.x + 3, locationInView.y, LENGTH_WIDTH, LENGTH_HEIGHT);
             curLineLengthView.lineLength = [NSString stringWithFormat:@"%.0f", height];
         }
         

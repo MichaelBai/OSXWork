@@ -10,6 +10,6 @@
 
 @interface MBGoDesignLineLengthView : NSView
 
-@property NSString* lineLength;
+@property (nonatomic) NSString* lineLength;
 
 @end
