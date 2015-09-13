@@ -26,7 +26,13 @@
         _colorField.bordered = NO;
         _colorField.selectable = NO;
         _colorField.backgroundColor = [NSColor clearColor];
+        _colorField.font = [NSFont fontWithName:@"Monaco" size:10];
+        _colorField.textColor = [NSColor redColor];
         [self addSubview:_colorField];
+        
+        NSImageView* arrow = [[NSImageView alloc] initWithFrame:NSMakeRect(self.bounds.size.width/2-4/2, 0, 4, 5.5)];
+        arrow.image = [NSImage imageNamed:@"color-arrow"];
+        [self addSubview:arrow];
     }
     return self;
 }

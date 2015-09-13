@@ -111,6 +111,13 @@
     [lastColorView setNeedsDisplay:YES];
 }
 
+#pragma mark - Cursor
+
+- (void)resetCursorRects
+{
+    [self addCursorRect:self.bounds cursor:[NSCursor crosshairCursor]];
+}
+
 #pragma mark - Mouse Event Methods
 
 /*
@@ -176,11 +183,11 @@
     
     if (_opMode == OP_Color) {
         if (!_colorView) {
-            _colorView = [[MBGoDesignColorView alloc] initWithFrame:NSMakeRect(locationInView.x, locationInView.y, 50, 20)];
+            _colorView = [[MBGoDesignColorView alloc] initWithFrame:NSMakeRect(locationInView.x - 30, locationInView.y, 60, 18)];
             [_colorViews addObject:_colorView];
             [self addSubview:_colorView];
         }
-        _colorView.frame = NSMakeRect(locationInView.x, locationInView.y, 50, 20);
+        _colorView.frame = NSMakeRect(locationInView.x - 30, locationInView.y, 60, 18);
         _colorView.colorStr = [self getColorStringInPoint:locationInView];
         
         [self setNeedsDisplay:YES];
