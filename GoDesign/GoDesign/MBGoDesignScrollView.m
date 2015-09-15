@@ -53,7 +53,8 @@
 - (NSView *)containerView
 {
     if (!_containerView) {
-        _containerView = [[NSView alloc] initWithFrame:self.bounds];
+        NSSize estimatedSize = [NSScrollView contentSizeForFrameSize:self.bounds.size horizontalScrollerClass:[NSScroller class] verticalScrollerClass:[NSScroller class] borderType:NSNoBorder controlSize:NSRegularControlSize scrollerStyle:NSScrollerStyleLegacy];
+        _containerView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, estimatedSize.width, estimatedSize.height)];
     }
     return _containerView;
 }
