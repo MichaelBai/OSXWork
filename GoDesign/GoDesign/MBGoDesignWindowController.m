@@ -93,4 +93,34 @@
     }
 }
 
+- (IBAction)saveImg:(NSButton *)sender {
+    // http://stackoverflow.com/a/9545213/1391851
+    // save entire NSView in NSScrollView
+    [_scrollView.imgView lockFocus];
+    
+    NSBitmapImageRep* rep = [_scrollView.imgView bitmapImageRepForCachingDisplayInRect:_scrollView.imgView.bounds];
+    [_scrollView.imgView cacheDisplayInRect:_scrollView.imgView.bounds toBitmapImageRep:rep];
+    
+    [_scrollView.imgView unlockFocus];
+    
+    NSData *imgData = [rep representationUsingType:NSPNGFileType properties:nil];
+    
+    // Open save panel
+    NSSavePanel *savepanel = [NSSavePanel savePanel];
+    savepanel.title = @"Save chart";
+    
+    [savepanel setAllowedFileTypes:[NSArray arrayWithObject:@"png"]];
+    
+    [savepanel beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
+         if (NSFileHandlingPanelOKButton == result) {
+             NSURL* fileURL = [savepanel URL];
+             
+             if ([fileURL.pathExtension isEqualToString:@""])
+                 fileURL = [fileURL URLByAppendingPathExtension:@"png"];
+             
+             [imgData writeToURL:fileURL atomically:YES];
+         }
+     }];
+}
+
 @end
