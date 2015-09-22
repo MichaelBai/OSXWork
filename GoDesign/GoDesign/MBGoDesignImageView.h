@@ -14,4 +14,7 @@
 @property LineAxis lineAxis;
 @property LineMode lineMode;
 
+- (void)undo;
+- (void)redo;
+
 @end

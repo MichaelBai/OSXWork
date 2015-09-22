@@ -123,4 +123,12 @@
      }];
 }
 
+- (IBAction)undo:(NSMenuItem *)sender {
+    [_scrollView.imgView undo];
+}
+
+- (IBAction)redo:(NSMenuItem *)sender {
+    [_scrollView.imgView redo];
+}
+
 @end

@@ -147,8 +147,9 @@
         NSRect lineViewFrame = NSMakeRect(_startPoint.x, _startPoint.y-LINEVIEW_WIDTH/2, 0, 0);
         MBGoDesignLineView* lineView = [[MBGoDesignLineView alloc] initWithFrame:lineViewFrame lineAxis:_lineAxis];
         
-        [_measuringlines addObject:lineView];
-        [self addSubview:lineView];
+//        [_measuringlines addObject:lineView];
+//        [self addSubview:lineView];
+        [self addLineView:lineView];
         
         // add line length view
         NSRect lineLengthFrame = NSMakeRect(locationInView.x, locationInView.y, LENGTH_WIDTH, LENGTH_HEIGHT);
@@ -198,8 +199,9 @@
         if (!_autoLine) {
             _autoLine = [[MBGoDesignLineView alloc] initWithFrame:NSZeroRect lineAxis:_lineAxis];
             
-            [_measuringlines addObject:_autoLine];
-            [self addSubview:_autoLine];
+//            [_measuringlines addObject:_autoLine];
+//            [self addSubview:_autoLine];
+            [self addLineView:_autoLine];
             
             // TODO: duplicate here with code in MouseDown:
             NSRect lineLengthFrame = NSMakeRect(locationInView.x, locationInView.y, LENGTH_WIDTH, LENGTH_HEIGHT);
@@ -434,6 +436,40 @@
     }
     
     return retPoint;
+}
+
+- (void)undo
+{
+    if ([self.undoManager canUndo]) {
+        [self.undoManager undo];
+        [self setNeedsDisplay:YES];
+    }
+}
+
+- (void)redo
+{
+    if ([self.undoManager canRedo]) {
+        [self.undoManager redo];
+        [self setNeedsDisplay:YES];
+    }
+}
+
+- (void)removeLineView:(MBGoDesignLineView*)lineView
+{
+    [self.undoManager beginUndoGrouping];
+    [[self.undoManager prepareWithInvocationTarget:self] addLineView:lineView];
+    [_measuringlines removeObject:lineView];
+    [lineView removeFromSuperview];
+    [self setNeedsDisplay:YES];
+    [self.undoManager endUndoGrouping];
+}
+
+- (void)addLineView:(MBGoDesignLineView*)lineView
+{
+    [[self.undoManager prepareWithInvocationTarget:self] removeLineView:lineView];
+    [_measuringlines addObject:lineView];
+    [self addSubview:lineView];
+    [self setNeedsDisplay:YES];
 }
 
 @end
