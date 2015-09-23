@@ -173,6 +173,19 @@
     [self setNeedsDisplay:YES];
 }
 
+- (void)rightMouseDown:(NSEvent *)theEvent
+{
+    // remove last manual line
+    MBGoDesignLineView* curLineView = _measuringlines.lastObject;
+    [curLineView removeFromSuperview];
+    [_measuringlines removeLastObject];
+    MBGoDesignLineLengthView* curLineLengthView = _lineLengths.lastObject;
+    [curLineLengthView removeFromSuperview];
+    [_lineLengths removeLastObject];
+    
+    _startPoint = CGPointZero;
+}
+
 - (void)mouseMoved:(NSEvent *)theEvent
 {
     NSPoint locationInView = [self convertPoint:theEvent.locationInWindow fromView:nil];
