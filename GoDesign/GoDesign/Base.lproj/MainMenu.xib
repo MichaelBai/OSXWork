@@ -674,14 +674,14 @@
         <window title="GoDesign" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="758" height="544"/>
+            <rect key="contentRect" x="335" y="390" width="765" height="593"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="758" height="544"/>
+                <rect key="frame" x="0.0" y="0.0" width="765" height="593"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <scrollView autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q2a-Lu-7pF" customClass="MBGoDesignScrollView">
-                        <rect key="frame" x="108" y="10" width="640" height="524"/>
+                        <rect key="frame" x="108" y="10" width="647" height="573"/>
                         <clipView key="contentView" id="ppg-C8-qh2">
                             <rect key="frame" x="1" y="1" width="638" height="522"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -701,7 +701,7 @@
                         </scroller>
                     </scrollView>
                     <matrix verticalHuggingPriority="750" fixedFrame="YES" allowsEmptySelection="NO" autorecalculatesCellSize="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K1j-gy-WfP">
-                        <rect key="frame" x="10" y="435" width="105" height="38"/>
+                        <rect key="frame" x="10" y="484" width="105" height="38"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         <size key="cellSize" width="98" height="18"/>
                         <size key="intercellSpacing" width="4" height="2"/>
@@ -726,7 +726,7 @@
                         </connections>
                     </matrix>
                     <matrix verticalHuggingPriority="750" fixedFrame="YES" allowsEmptySelection="NO" autorecalculatesCellSize="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j8y-gM-EfV">
-                        <rect key="frame" x="10" y="337" width="95" height="38"/>
+                        <rect key="frame" x="10" y="386" width="95" height="38"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         <size key="cellSize" width="88" height="18"/>
                         <size key="intercellSpacing" width="4" height="2"/>
@@ -751,7 +751,7 @@
                         </connections>
                     </matrix>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nho-XJ-UZX">
-                        <rect key="frame" x="20" y="199" width="74" height="32"/>
+                        <rect key="frame" x="20" y="248" width="74" height="32"/>
                         <buttonCell key="cell" type="push" title="Open" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zTP-8n-fxN">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -761,7 +761,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qos-Tr-4bP">
-                        <rect key="frame" x="16" y="123" width="82" height="32"/>
+                        <rect key="frame" x="16" y="172" width="82" height="32"/>
                         <buttonCell key="cell" type="push" title="Color" alternateTitle="NonColor" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Zi4-T6-hW7">
                             <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -771,13 +771,33 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qPc-3H-IO3">
-                        <rect key="frame" x="22" y="48" width="71" height="32"/>
+                        <rect key="frame" x="22" y="97" width="71" height="32"/>
                         <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="XRA-dw-pBY">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
                             <action selector="saveImg:" target="Voe-Tx-rLC" id="bqU-Sa-QXY"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Toh-IX-n9J">
+                        <rect key="frame" x="20" y="46" width="74" height="32"/>
+                        <buttonCell key="cell" type="push" title="Undo" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8oa-O3-lcq">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="undoBtnClick:" target="Voe-Tx-rLC" id="mgV-Ym-XB7"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ds6-dy-2wh">
+                        <rect key="frame" x="21" y="13" width="72" height="32"/>
+                        <buttonCell key="cell" type="push" title="Redo" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="wYj-Dy-w1l">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="redoBtnClick:" target="Voe-Tx-rLC" id="muV-e0-uQQ"/>
                         </connections>
                     </button>
                 </subviews>
@@ -788,6 +808,7 @@
                     <constraint firstItem="Q2a-Lu-7pF" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="108" id="vL4-Lh-wU4"/>
                 </constraints>
             </view>
+            <point key="canvasLocation" x="147.5" y="537.5"/>
         </window>
     </objects>
 </document>

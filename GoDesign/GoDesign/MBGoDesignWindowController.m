@@ -131,4 +131,12 @@
     [_scrollView.imgView redo];
 }
 
+- (IBAction)undoBtnClick:(NSButton *)sender {
+    [_scrollView.imgView undo];
+}
+
+- (IBAction)redoBtnClick:(NSButton *)sender {
+    [_scrollView.imgView redo];
+}
+
 @end
